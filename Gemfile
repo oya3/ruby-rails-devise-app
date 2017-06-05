@@ -8,7 +8,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'devise'
-gem 'bcrypt', git: 'https://github.com/oya3/bcrypt-ruby.git', :require => 'bcrypt' 
+gem 'bcrypt', git: 'https://github.com/oya3/bcrypt-ruby.git', :require => 'bcrypt'
 group :development, :test do
   gem 'byebug'
 end
@@ -40,4 +40,7 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
+end
+group :development do
+  gem 'erb2haml', '~> 0.1.5'
 end
