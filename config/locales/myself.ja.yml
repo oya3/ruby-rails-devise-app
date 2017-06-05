@@ -1,0 +1,6 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        login: "ログイン"
+        username: "ユーザー名"
