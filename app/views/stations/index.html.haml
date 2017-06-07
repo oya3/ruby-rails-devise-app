@@ -1,0 +1,23 @@
+%h1 Listing stations
+
+%table
+  %thead
+    %tr
+      %th Code
+      %th Name
+      %th
+      %th
+      %th
+
+  %tbody
+    - @stations.each do |station|
+      %tr
+        %td= station.code
+        %td= station.name
+        %td= link_to 'Show', station
+        %td= link_to 'Edit', edit_station_path(station)
+        %td= link_to 'Destroy', station, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Station', new_station_path
