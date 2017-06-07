@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :train_routes
   resources :stations
   # devise_for :users
   devise_for :users

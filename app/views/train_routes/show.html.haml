@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @train_route.name
+
+= link_to 'Edit', edit_train_route_path(@train_route)
+\|
+= link_to 'Back', train_routes_path

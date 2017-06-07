@@ -1,0 +1,21 @@
+%h1 Listing train_routes
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th
+      %th
+      %th
+
+  %tbody
+    - @train_routes.each do |train_route|
+      %tr
+        %td= train_route.name
+        %td= link_to 'Show', train_route
+        %td= link_to 'Edit', edit_train_route_path(train_route)
+        %td= link_to 'Destroy', train_route, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Train route', new_train_route_path
