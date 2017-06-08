@@ -5,6 +5,7 @@
   %table.table.table-striped.table-bordered
     %thead
       %tr
+        %th Code
         %th Name
         %th
         %th
@@ -13,6 +14,7 @@
     %tbody
       - @train_routes.each do |train_route|
         %tr
+          %td= train_route.code
           %td= train_route.name
           %td= link_to 'Show', train_route
           %td= link_to 'Edit', edit_train_route_path(train_route)
