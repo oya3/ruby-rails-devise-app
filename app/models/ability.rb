@@ -1,4 +1,4 @@
-# coding: cp932
+# coding: utf-8
 class Ability
   include CanCan::Ability
 
@@ -32,7 +32,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.has_role? :admin
       can :manage, :all
-    # admin ˆÈŠO‚Í‰½‚à‚³‚¹‚È‚¢
+    # admin ä»¥å¤–ã¯ä½•ã‚‚ã•ã›ãªã„
     # else
     #   can :read, :all
     end
