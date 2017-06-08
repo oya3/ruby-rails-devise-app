@@ -54,8 +54,4 @@ class StationsController < ApplicationController
     def station_params
       params.require(:station).permit(:code, :name, :train_route_ids => [])
     end
-
-    def train_routes_params
-      aaa
-    end
 end
