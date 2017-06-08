@@ -1,21 +1,21 @@
-%h1 Listing train_routes
+.container
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th
-      %th
-      %th
+  %h1 Listing train_routes
 
-  %tbody
-    - @train_routes.each do |train_route|
+  %table.table.table-striped.table-bordered
+    %thead
       %tr
-        %td= train_route.name
-        %td= link_to 'Show', train_route
-        %td= link_to 'Edit', edit_train_route_path(train_route)
-        %td= link_to 'Destroy', train_route, method: :delete, data: { confirm: 'Are you sure?' }
+        %th Name
+        %th
+        %th
+        %th
 
-%br
+    %tbody
+      - @train_routes.each do |train_route|
+        %tr
+          %td= train_route.name
+          %td= link_to 'Show', train_route
+          %td= link_to 'Edit', edit_train_route_path(train_route)
+          %td= link_to 'Destroy', train_route, method: :delete, data: { confirm: 'Are you sure?' }
 
-= link_to 'New Train route', new_train_route_path
+  = link_to 'New Train route', new_train_route_path

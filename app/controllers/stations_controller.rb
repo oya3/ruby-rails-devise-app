@@ -1,5 +1,6 @@
 class StationsController < ApplicationController
   before_action :set_station, only: [:show, :edit, :update, :destroy]
+  respond_to :html
 
   # GET /stations
   # GET /stations.json
@@ -25,40 +26,22 @@ class StationsController < ApplicationController
   # POST /stations.json
   def create
     @station = Station.new(station_params)
-
-    respond_to do |format|
-      if @station.save
-        format.html { redirect_to @station, notice: 'Station was successfully created.' }
-        format.json { render :show, status: :created, location: @station }
-      else
-        format.html { render :new }
-        format.json { render json: @station.errors, status: :unprocessable_entity }
-      end
-    end
+    @station.save
+    respond_with(@station)
   end
 
   # PATCH/PUT /stations/1
   # PATCH/PUT /stations/1.json
   def update
-    respond_to do |format|
-      if @station.update(station_params)
-        format.html { redirect_to @station, notice: 'Station was successfully updated.' }
-        format.json { render :show, status: :ok, location: @station }
-      else
-        format.html { render :edit }
-        format.json { render json: @station.errors, status: :unprocessable_entity }
-      end
-    end
+    @station.update(station_params)
+    respond_with(@station)
   end
 
   # DELETE /stations/1
   # DELETE /stations/1.json
   def destroy
     @station.destroy
-    respond_to do |format|
-      format.html { redirect_to stations_url, notice: 'Station was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    respond_with(@station, location: stations_url)
   end
 
   private
@@ -69,6 +52,10 @@ class StationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def station_params
-      params.require(:station).permit(:code, :name)
+      params.require(:station).permit(:code, :name, :train_route_ids => [])
+    end
+
+    def train_routes_params
+      aaa
     end
 end

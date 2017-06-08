@@ -3,6 +3,7 @@
 
   .form-inputs
     = f.input :name
+    = f.association :stations, as: :check_boxes
 
   .form-actions
     = f.button :submit

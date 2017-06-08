@@ -1,5 +1,6 @@
 class TrainRoutesController < ApplicationController
   before_action :set_train_route, only: [:show, :edit, :update, :destroy]
+  respond_to :html
 
   # GET /train_routes
   # GET /train_routes.json
@@ -25,40 +26,22 @@ class TrainRoutesController < ApplicationController
   # POST /train_routes.json
   def create
     @train_route = TrainRoute.new(train_route_params)
-
-    respond_to do |format|
-      if @train_route.save
-        format.html { redirect_to @train_route, notice: 'Train route was successfully created.' }
-        format.json { render :show, status: :created, location: @train_route }
-      else
-        format.html { render :new }
-        format.json { render json: @train_route.errors, status: :unprocessable_entity }
-      end
-    end
+    @train_route.save
+    respond_with(@train_route)
   end
 
   # PATCH/PUT /train_routes/1
   # PATCH/PUT /train_routes/1.json
   def update
-    respond_to do |format|
-      if @train_route.update(train_route_params)
-        format.html { redirect_to @train_route, notice: 'Train route was successfully updated.' }
-        format.json { render :show, status: :ok, location: @train_route }
-      else
-        format.html { render :edit }
-        format.json { render json: @train_route.errors, status: :unprocessable_entity }
-      end
-    end
+    @train_route.update(train_route_params)
+    respond_with(@train_route)
   end
 
   # DELETE /train_routes/1
   # DELETE /train_routes/1.json
   def destroy
     @train_route.destroy
-    respond_to do |format|
-      format.html { redirect_to train_routes_url, notice: 'Train route was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    respond_with(@train_route, location: train_routes_url)
   end
 
   private
@@ -69,6 +52,6 @@ class TrainRoutesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def train_route_params
-      params.require(:train_route).permit(:name)
+      params.require(:train_route).permit(:name, :station_ids => [])
     end
 end

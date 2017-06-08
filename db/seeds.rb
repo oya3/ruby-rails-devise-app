@@ -17,3 +17,18 @@ user.add_role :member # member権限付与
 user = User.create(email: 'shibata@test.com', password: 'shibata3', username: 'shibata')
 user.add_role :member # member権限付与
 
+Station.create(code: 1, name: '京都')
+Station.create(code: 2, name: '山科')
+Station.create(code: 3, name: '大津')
+Station.create(code: 4, name: '膳所')
+
+TrainRoute.create(name: '琵琶湖線')
+TrainRoute.create(name: '湖西線')
+
+TrainRoute.find_by(name: '琵琶湖線').stations << Station.find_by(name: '京都')
+TrainRoute.find_by(name: '琵琶湖線').stations << Station.find_by(name: '山科')
+TrainRoute.find_by(name: '琵琶湖線').stations << Station.find_by(name: '大津')
+TrainRoute.find_by(name: '琵琶湖線').stations << Station.find_by(name: '膳所')
+
+TrainRoute.find_by(name: '湖西線').stations << Station.find_by(name: '京都')
+TrainRoute.find_by(name: '湖西線').stations << Station.find_by(name: '山科')

@@ -1,9 +1,28 @@
-%p#notice= notice
+.container
+  %p#notice= notice
 
-%p
-  %b Name:
-  = @train_route.name
+  %p
+  %h1 Show train_route
+  %big
+    %b Name:
+    = @train_route.name
 
-= link_to 'Edit', edit_train_route_path(@train_route)
-\|
-= link_to 'Back', train_routes_path
+  %p
+  %big
+    %b Stations:
+  %table.table.table-striped.table-bordered
+    %thead
+      %tr
+        %th Code
+        %th Name
+
+    %tbody
+    - @train_route.stations.order('code').each do |station|
+      %tr
+        %td= station.code
+        %td= station.name
+
+  %p
+  = link_to 'Edit', edit_train_route_path(@train_route)
+  \|
+  = link_to 'Back', train_routes_path

@@ -4,6 +4,7 @@
   .form-inputs
     = f.input :code
     = f.input :name
+    = f.association :train_routes, as: :check_boxes
 
   .form-actions
     = f.button :submit
