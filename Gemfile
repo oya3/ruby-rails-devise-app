@@ -45,4 +45,5 @@ group :test do
 end
 group :development do
   gem 'erb2haml', '~> 0.1.5'
+  gem 'yaml_db'
 end

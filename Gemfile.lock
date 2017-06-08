@@ -243,6 +243,9 @@ GEM
     websocket (1.2.4)
     xpath (2.1.0)
       nokogiri (~> 1.3)
+    yaml_db (0.6.0)
+      rails (>= 3.0, < 5.2)
+      rake (>= 0.8.7)
 
 PLATFORMS
   x86-mingw32
@@ -282,6 +285,7 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
+  yaml_db
 
 RUBY VERSION
    ruby 2.3.1p112
