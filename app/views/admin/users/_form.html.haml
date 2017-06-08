@@ -1,0 +1,12 @@
+= simple_form_for(@user, url: path) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :username
+    = f.input :password
+    = f.input :email
+    / = f.association :roles, as: :radio_buttons
+    = f.association :roles, as: :check_boxes
+
+  .form-actions
+    = f.button :submit

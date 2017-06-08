@@ -1,7 +1,7 @@
-%li= link_to 'users', users_path
-
 - if user_signed_in?
-  %li.navbar-text= current_user.email
+  - if current_user.has_role? :admin
+    %li= link_to 'users', admin_users_path
+  %li.navbar-text= current_user.username + '(' + current_user.roles_name[0] + ')' 
   %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 - else
   %li= link_to 'Sign in', new_user_session_path

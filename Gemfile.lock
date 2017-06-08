@@ -57,6 +57,7 @@ GEM
       sass (>= 3.3.4)
     builder (3.2.3)
     byebug (9.0.6)
+    cancancan (2.0.0)
     capybara (2.14.0)
       addressable
       mime-types (>= 1.16)
@@ -174,6 +175,7 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
+    rolify (5.1.0)
     rspec-core (3.6.0)
       rspec-support (~> 3.6.0)
     rspec-expectations (3.6.0)
@@ -250,6 +252,7 @@ DEPENDENCIES
   better_errors
   bootstrap-sass
   byebug
+  cancancan
   capybara
   coffee-rails (~> 4.1.0)
   database_cleaner
@@ -269,6 +272,7 @@ DEPENDENCIES
   rails_apps_pages
   rails_apps_testing
   rails_layout
+  rolify
   rspec-rails
   sass-rails (~> 5.0)
   selenium-webdriver

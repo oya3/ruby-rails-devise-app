@@ -9,6 +9,8 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'devise'
 gem 'bcrypt', git: 'https://github.com/oya3/bcrypt-ruby.git', :require => 'bcrypt'
+gem 'cancancan'
+gem 'rolify'
 group :development, :test do
   gem 'byebug'
 end
