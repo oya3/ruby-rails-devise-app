@@ -1,0 +1,25 @@
+%h1 Listing distances
+
+%table
+  %thead
+    %tr
+      %th Station
+      %th Station
+      %th Distance
+      %th
+      %th
+      %th
+
+  %tbody
+    - @distances.each do |distance|
+      %tr
+        %td= distance.station
+        %td= distance.station
+        %td= distance.distance
+        %td= link_to 'Show', distance
+        %td= link_to 'Edit', edit_distance_path(distance)
+        %td= link_to 'Destroy', distance, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Distance', new_distance_path

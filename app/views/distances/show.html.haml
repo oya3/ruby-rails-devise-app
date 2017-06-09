@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Station:
+  = @distance.station
+%p
+  %b Station:
+  = @distance.station
+%p
+  %b Distance:
+  = @distance.distance
+
+= link_to 'Edit', edit_distance_path(@distance)
+\|
+= link_to 'Back', distances_path

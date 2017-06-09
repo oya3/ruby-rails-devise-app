@@ -1,0 +1,10 @@
+= simple_form_for(@distance) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :station
+    = f.association :station
+    = f.input :distance
+
+  .form-actions
+    = f.button :submit
