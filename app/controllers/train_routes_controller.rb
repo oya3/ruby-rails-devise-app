@@ -52,6 +52,6 @@ class TrainRoutesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def train_route_params
-      params.require(:train_route).permit(:name, :station_ids => [])
+      params.require(:train_route).permit(:code, :name, :station_ids => [])
     end
 end

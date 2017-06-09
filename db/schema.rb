@@ -39,10 +39,13 @@ ActiveRecord::Schema.define(version: 20170607064107) do
   end
 
   create_table "train_routes", force: :cascade do |t|
+    t.integer  "code"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "train_routes", ["code"], name: "index_train_routes_on_code", unique: true
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

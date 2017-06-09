@@ -2,9 +2,14 @@
 
 %p
 %h1 Show train_route
-%big
-  %b Name:
-  = @train_route.name
+%table.table.table-bordered
+  %tbody
+    %tr
+      %td Code
+      %td= @train_route.code
+    %tr
+      %td Name
+      %td= @train_route.name
 
 %p
 %big
