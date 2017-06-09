@@ -16,6 +16,10 @@ user = User.create(email: 'oya@test.com', password: 'oya333', username: 'oya')
 user.add_role :member # member権限付与
 user = User.create(email: 'shibata@test.com', password: 'shibata3', username: 'shibata')
 user.add_role :member # member権限付与
+user = User.create(email: 'test@test.com', password: 'test333', username: 'test')
+user.add_role :admin
+user.add_role :member
+user.add_role :guest
 
 Station.create(code: 1, name: '京都')
 Station.create(code: 2, name: '山科')
@@ -70,7 +74,7 @@ Station.create(code: 48, name: '甲賀')
 Station.create(code: 49, name: '油日')
 Station.create(code: 50, name: '柘植')
 
-train_route = TrainRoute.create(code: 1, name: '琵琶湖線')
+train_route = TrainRoute.create(name: '琵琶湖線')
 train_route.stations << Station.find_by(name: '京都')
 train_route.stations << Station.find_by(name: '山科')
 train_route.stations << Station.find_by(name: '大津')
@@ -92,7 +96,7 @@ train_route.stations << Station.find_by(name: '南彦根')
 train_route.stations << Station.find_by(name: '彦根')
 train_route.stations << Station.find_by(name: '米原')
 
-train_route = TrainRoute.create(code: 2, name: '湖西線')
+train_route = TrainRoute.create(name: '湖西線')
 train_route.stations << Station.find_by(name: '京都')
 train_route.stations << Station.find_by(name: '山科')
 train_route.stations << Station.find_by(name: '大津京')
@@ -116,7 +120,7 @@ train_route.stations << Station.find_by(name: 'マキノ')
 train_route.stations << Station.find_by(name: '永原')
 train_route.stations << Station.find_by(name: '近江塩津')
 
-train_route = TrainRoute.create(code: 3, name: '草津線')
+train_route = TrainRoute.create(name: '草津線')
 train_route.stations << Station.find_by(name: '草津')
 train_route.stations << Station.find_by(name: '手原')
 train_route.stations << Station.find_by(name: '石部')
