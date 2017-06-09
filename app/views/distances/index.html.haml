@@ -1,10 +1,10 @@
 %h1 Listing distances
 
-%table
+%table.table.table-striped.table-bordered
   %thead
     %tr
-      %th Station
-      %th Station
+      %th Departure station
+      %th Destination station
       %th Distance
       %th
       %th
@@ -13,8 +13,8 @@
   %tbody
     - @distances.each do |distance|
       %tr
-        %td= distance.station
-        %td= distance.station
+        %td= distance.departure_station.name
+        %td= distance.destination_station.name
         %td= distance.distance
         %td= link_to 'Show', distance
         %td= link_to 'Edit', edit_distance_path(distance)

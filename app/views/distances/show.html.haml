@@ -1,15 +1,20 @@
 %p#notice= notice
 
 %p
-  %b Station:
-  = @distance.station
-%p
-  %b Station:
-  = @distance.station
-%p
-  %b Distance:
-  = @distance.distance
+%h1 Show distance
+%table.table.table-bordered
+  %tbody
+    %tr
+      %td Departure station
+      %td= @distance.departure_station.name
+    %tr
+      %td Destination station
+      %td= @distance.destination_station.name
+    %tr
+      %td Distance
+      %td= @distance.distance
 
+%p
 = link_to 'Edit', edit_distance_path(@distance)
 \|
 = link_to 'Back', distances_path
