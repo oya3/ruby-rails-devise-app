@@ -1,23 +1,21 @@
-.container
+%h1 Listing stations
 
-  %h1 Listing stations
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Code
+      %th Name
+      %th
+      %th
+      %th
 
-  %table.table.table-striped.table-bordered
-    %thead
+  %tbody
+    - @stations.order('code').each do |station|
       %tr
-        %th Code
-        %th Name
-        %th
-        %th
-        %th
+        %td= station.code
+        %td= station.name
+        %td= link_to 'Show', station
+        %td= link_to 'Edit', edit_station_path(station)
+        %td= link_to 'Destroy', station, method: :delete, data: { confirm: 'Are you sure?' }
 
-    %tbody
-      - @stations.order('code').each do |station|
-        %tr
-          %td= station.code
-          %td= station.name
-          %td= link_to 'Show', station
-          %td= link_to 'Edit', edit_station_path(station)
-          %td= link_to 'Destroy', station, method: :delete, data: { confirm: 'Are you sure?' }
-
-  = link_to 'New Station', new_station_path
+= link_to 'New Station', new_station_path

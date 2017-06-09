@@ -1,9 +1,7 @@
-.container
+%h1 Editing station
 
-  %h1 Editing station
+= render 'form'
 
-  = render 'form'
-
-  = link_to 'Show', @station
-  \|
-  = link_to 'Back', stations_path
+= link_to 'Show', @station
+\|
+= link_to 'Back', stations_path
