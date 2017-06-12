@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170607064107) do
+ActiveRecord::Schema.define(version: 20170609063253) do
+
+  create_table "distances", force: :cascade do |t|
+    t.integer  "departure_station_id",   null: false
+    t.integer  "destination_station_id", null: false
+    t.integer  "distance"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"

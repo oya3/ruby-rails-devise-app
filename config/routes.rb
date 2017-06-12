@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :distances
   resources :train_routes
   resources :stations
   devise_for :users
