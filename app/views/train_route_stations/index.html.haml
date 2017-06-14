@@ -1,0 +1,27 @@
+%h1 Listing train_route_stations
+
+%table
+  %thead
+    %tr
+      %th Train route
+      %th Station
+      %th Row oder
+      %th Distance
+      %th
+      %th
+      %th
+
+  %tbody
+    - @train_route_stations.each do |train_route_station|
+      %tr
+        %td= train_route_station.train_route
+        %td= train_route_station.station
+        %td= train_route_station.row_oder
+        %td= train_route_station.distance
+        %td= link_to 'Show', train_route_station
+        %td= link_to 'Edit', edit_train_route_station_path(train_route_station)
+        %td= link_to 'Destroy', train_route_station, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Train route station', new_train_route_station_path

@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Train route:
+  = @train_route_station.train_route
+%p
+  %b Station:
+  = @train_route_station.station
+%p
+  %b Row oder:
+  = @train_route_station.row_oder
+%p
+  %b Distance:
+  = @train_route_station.distance
+
+= link_to 'Edit', edit_train_route_station_path(@train_route_station)
+\|
+= link_to 'Back', train_route_stations_path

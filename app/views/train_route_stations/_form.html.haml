@@ -1,0 +1,11 @@
+= simple_form_for(@train_route_station) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :train_route
+    = f.association :station
+    = f.input :row_oder
+    = f.input :distance
+
+  .form-actions
+    = f.button :submit

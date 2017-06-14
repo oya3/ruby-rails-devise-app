@@ -11,6 +11,7 @@ gem 'devise'
 gem 'bcrypt', git: 'https://github.com/oya3/bcrypt-ruby.git', :require => 'bcrypt'
 gem 'cancancan'
 gem 'rolify'
+gem 'nested_form'
 group :development, :test do
   gem 'byebug'
 end
