@@ -22,7 +22,7 @@
 
   %tbody
   - @train_route.train_route_stations.order('row_oder').each do |train_route_station|
-    - station = Staion.find(train_route_station.station)
+    - station = Station.find(train_route_station.station)
     %tr
       %td= station.code
       %td= station.name
