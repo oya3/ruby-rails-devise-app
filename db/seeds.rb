@@ -94,7 +94,7 @@ train_route.train_route_stations_attributes=[
   {:distance=>'16', :station_id =>Station.find_by(name: '河瀬').id},
   {:distance=>'17', :station_id =>Station.find_by(name: '南彦根').id},
   {:distance=>'18', :station_id =>Station.find_by(name: '彦根').id},
-  {:distance=>'29', :station_id =>Station.find_by(name: '米原').id},
+  {:distance=> nil, :station_id =>Station.find_by(name: '米原').id},
 ]
 train_route.save
   
@@ -142,7 +142,7 @@ train_route.train_route_stations_attributes=[
   {:distance=>'38', :station_id =>Station.find_by(name: '近江中庄').id},
   {:distance=>'39', :station_id =>Station.find_by(name: 'マキノ').id},
   {:distance=>'40', :station_id =>Station.find_by(name: '永原').id},
-  {:distance=>'41', :station_id =>Station.find_by(name: '近江塩津').id},
+  {:distance=> nil, :station_id =>Station.find_by(name: '近江塩津').id},
 ]
 train_route.save
 
@@ -181,7 +181,7 @@ train_route.train_route_stations_attributes=[
   {:distance=>'37', :station_id =>Station.find_by(name: '寺庄').id},
   {:distance=>'38', :station_id =>Station.find_by(name: '甲賀').id},
   {:distance=>'39', :station_id =>Station.find_by(name: '油日').id},
-  {:distance=>'40', :station_id =>Station.find_by(name: '柘植').id},
+  {:distance=> nil, :station_id =>Station.find_by(name: '柘植').id},
 ]
 train_route.save
 
