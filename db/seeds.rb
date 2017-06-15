@@ -73,7 +73,31 @@ Station.create(code: 48, name: '甲賀')
 Station.create(code: 49, name: '油日')
 Station.create(code: 50, name: '柘植')
 
-# train_route = TrainRoute.create(code: 1, name: '琵琶湖線')
+train_route = TrainRoute.create(code: 1, name: '琵琶湖線')
+train_route.train_route_stations_attributes=[
+  {:distance=>'10', :station_id =>Station.find_by(name: '京都').id},
+  {:distance=>'11', :station_id =>Station.find_by(name: '山科').id},
+  {:distance=>'12', :station_id =>Station.find_by(name: '大津').id},
+  {:distance=>'13', :station_id =>Station.find_by(name: '膳所').id},
+  {:distance=>'14', :station_id =>Station.find_by(name: '石山').id},
+  {:distance=>'15', :station_id =>Station.find_by(name: '瀬田').id},
+  {:distance=>'16', :station_id =>Station.find_by(name: '南草津').id},
+  {:distance=>'17', :station_id =>Station.find_by(name: '草津').id},
+  {:distance=>'18', :station_id =>Station.find_by(name: '栗東').id},
+  {:distance=>'19', :station_id =>Station.find_by(name: '守山').id},
+  {:distance=>'10', :station_id =>Station.find_by(name: '野洲').id},
+  {:distance=>'11', :station_id =>Station.find_by(name: '篠原').id},
+  {:distance=>'12', :station_id =>Station.find_by(name: '近江八幡').id},
+  {:distance=>'13', :station_id =>Station.find_by(name: '安土').id},
+  {:distance=>'14', :station_id =>Station.find_by(name: '能登川').id},
+  {:distance=>'15', :station_id =>Station.find_by(name: '稲枝').id},
+  {:distance=>'16', :station_id =>Station.find_by(name: '河瀬').id},
+  {:distance=>'17', :station_id =>Station.find_by(name: '南彦根').id},
+  {:distance=>'18', :station_id =>Station.find_by(name: '彦根').id},
+  {:distance=>'29', :station_id =>Station.find_by(name: '米原').id},
+]
+train_route.save
+  
 # train_route.stations << Station.find_by(name: '京都')
 # train_route.stations << Station.find_by(name: '山科')
 # train_route.stations << Station.find_by(name: '大津')
@@ -95,7 +119,33 @@ Station.create(code: 50, name: '柘植')
 # train_route.stations << Station.find_by(name: '彦根')
 # train_route.stations << Station.find_by(name: '米原')
 
-# train_route = TrainRoute.create(code: 2, name: '湖西線')
+train_route = TrainRoute.create(code: 2, name: '湖西線')
+train_route.train_route_stations_attributes=[
+  {:distance=>'20', :station_id =>Station.find_by(name: '京都').id},
+  {:distance=>'21', :station_id =>Station.find_by(name: '山科').id},
+  {:distance=>'22', :station_id =>Station.find_by(name: '大津京').id},
+  {:distance=>'23', :station_id =>Station.find_by(name: '唐崎').id},
+  {:distance=>'24', :station_id =>Station.find_by(name: '比叡山坂本').id},
+  {:distance=>'25', :station_id =>Station.find_by(name: 'おごと温泉').id},
+  {:distance=>'26', :station_id =>Station.find_by(name: '堅田').id},
+  {:distance=>'27', :station_id =>Station.find_by(name: '小野').id},
+  {:distance=>'28', :station_id =>Station.find_by(name: '和邇').id},
+  {:distance=>'29', :station_id =>Station.find_by(name: '蓬莱').id},
+  {:distance=>'30', :station_id =>Station.find_by(name: '志賀').id},
+  {:distance=>'31', :station_id =>Station.find_by(name: '比良').id},
+  {:distance=>'32', :station_id =>Station.find_by(name: '近江舞子').id},
+  {:distance=>'33', :station_id =>Station.find_by(name: '北小松').id},
+  {:distance=>'34', :station_id =>Station.find_by(name: '近江高島').id},
+  {:distance=>'35', :station_id =>Station.find_by(name: '安曇川').id},
+  {:distance=>'36', :station_id =>Station.find_by(name: '新旭').id},
+  {:distance=>'37', :station_id =>Station.find_by(name: '近江今津').id},
+  {:distance=>'38', :station_id =>Station.find_by(name: '近江中庄').id},
+  {:distance=>'39', :station_id =>Station.find_by(name: 'マキノ').id},
+  {:distance=>'40', :station_id =>Station.find_by(name: '永原').id},
+  {:distance=>'41', :station_id =>Station.find_by(name: '近江塩津').id},
+]
+train_route.save
+
 # train_route.stations << Station.find_by(name: '京都')
 # train_route.stations << Station.find_by(name: '山科')
 # train_route.stations << Station.find_by(name: '大津京')
@@ -119,7 +169,22 @@ Station.create(code: 50, name: '柘植')
 # train_route.stations << Station.find_by(name: '永原')
 # train_route.stations << Station.find_by(name: '近江塩津')
 
-# train_route = TrainRoute.create(code: 3, name: '草津線')
+train_route = TrainRoute.create(code: 3, name: '草津線')
+train_route.train_route_stations_attributes=[
+  {:distance=>'30', :station_id =>Station.find_by(name: '草津').id},
+  {:distance=>'31', :station_id =>Station.find_by(name: '手原').id},
+  {:distance=>'32', :station_id =>Station.find_by(name: '石部').id},
+  {:distance=>'33', :station_id =>Station.find_by(name: '甲西').id},
+  {:distance=>'34', :station_id =>Station.find_by(name: '三雲').id},
+  {:distance=>'35', :station_id =>Station.find_by(name: '貴生川').id},
+  {:distance=>'36', :station_id =>Station.find_by(name: '甲南').id},
+  {:distance=>'37', :station_id =>Station.find_by(name: '寺庄').id},
+  {:distance=>'38', :station_id =>Station.find_by(name: '甲賀').id},
+  {:distance=>'39', :station_id =>Station.find_by(name: '油日').id},
+  {:distance=>'40', :station_id =>Station.find_by(name: '柘植').id},
+]
+train_route.save
+
 # train_route.stations << Station.find_by(name: '草津')
 # train_route.stations << Station.find_by(name: '手原')
 # train_route.stations << Station.find_by(name: '石部')
