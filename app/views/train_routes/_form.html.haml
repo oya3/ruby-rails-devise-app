@@ -10,10 +10,13 @@
       = f.simple_fields_for :train_route_stations do |train_route_station|
         -# f.hidden_field :id がないと削除できない
         = f.hidden_field :id
-        = train_route_station.input :row_oder, text: '0'
         = train_route_station.input :distance
         = train_route_station.association :station
-        = train_route_station.link_to_remove "Remove"
+        .form-group
+          .col-sm-3
+          .col-sm-9
+            = train_route_station.link_to_remove "Remove"
+      
       = f.link_to_add "Add", :train_route_stations
 
 

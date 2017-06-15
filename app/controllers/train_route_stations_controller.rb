@@ -1,6 +1,13 @@
 class TrainRouteStationsController < ApplicationController
   before_action :set_train_route_station, only: [:show, :edit, :update, :destroy]
 
+
+  def sort
+    train_route_station = TrainRouteStation.find(params[:train_route_station_id])
+    train_route_station.update(train_route_station_params)
+    render nothing: true
+  end
+  
   # GET /train_route_stations
   # GET /train_route_stations.json
   def index
@@ -69,6 +76,6 @@ class TrainRouteStationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def train_route_station_params
-      params.require(:train_route_station).permit(:train_route_id, :station_id, :row_oder, :distance)
+      params.require(:train_route_station).permit(:train_route_id, :station_id, :distance, :row_order_position)
     end
 end

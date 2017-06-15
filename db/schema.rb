@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20170614064759) do
   create_table "train_route_stations", force: :cascade do |t|
     t.integer  "train_route_id"
     t.integer  "station_id"
-    t.integer  "row_oder"
+    t.integer  "row_order"
     t.integer  "distance"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false

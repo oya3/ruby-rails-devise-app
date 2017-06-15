@@ -14,18 +14,22 @@
 %p
 %big
   %b Stations:
-%table.table.table-striped.table-bordered
+%table.table.table-striped.table-bordered.table-sortable
   %thead
     %tr
       %th Code
       %th Name
+      %th Distance
+      %th 
 
   %tbody
-  - @train_route.train_route_stations.order('row_oder').each do |train_route_station|
+  - @train_route.train_route_stations.order('row_order').each do |train_route_station|
     - station = Station.find(train_route_station.station)
-    %tr
+    %tr.item{data: { model_name: train_route_station.class.name.underscore, update_url: train_route_station_sort_path(train_route_station) }}
       %td= station.code
       %td= station.name
+      %td= train_route_station.distance
+      %td= link_to 'edit', edit_train_route_station_path(train_route_station)
 
 %p
 = link_to 'Edit', edit_train_route_path(@train_route)
