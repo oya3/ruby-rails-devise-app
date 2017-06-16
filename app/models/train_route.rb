@@ -1,5 +1,10 @@
+# coding: utf-8
 class TrainRoute < ActiveRecord::Base
-  has_and_belongs_to_many :stations
+  has_many :train_route_stations, dependent: :destroy
+  accepts_nested_attributes_for :train_route_stations,
+                                allow_destroy: true,
+                                reject_if: :all_blank # オールブランクなら無視（バリデーションも働かない）
 
-  validates :code, uniqueness: true
+  validates :code, presence: true, uniqueness: true
+  validates :name, presence: true
 end

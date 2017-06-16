@@ -11,15 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609063253) do
-
-  create_table "distances", force: :cascade do |t|
-    t.integer  "departure_station_id",   null: false
-    t.integer  "destination_station_id", null: false
-    t.integer  "distance"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
+ActiveRecord::Schema.define(version: 20170614064759) do
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
@@ -41,10 +33,17 @@ ActiveRecord::Schema.define(version: 20170609063253) do
 
   add_index "stations", ["code"], name: "index_stations_on_code", unique: true
 
-  create_table "stations_train_routes", id: false, force: :cascade do |t|
-    t.integer "station_id",     null: false
-    t.integer "train_route_id", null: false
+  create_table "train_route_stations", force: :cascade do |t|
+    t.integer  "train_route_id"
+    t.integer  "station_id"
+    t.integer  "row_order"
+    t.integer  "distance"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
+
+  add_index "train_route_stations", ["station_id"], name: "index_train_route_stations_on_station_id"
+  add_index "train_route_stations", ["train_route_id"], name: "index_train_route_stations_on_train_route_id"
 
   create_table "train_routes", force: :cascade do |t|
     t.integer  "code"

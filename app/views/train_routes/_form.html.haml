@@ -1,10 +1,24 @@
-= simple_form_for(@train_route) do |f|
+-# = simple_nested_form_for(@train_route) do |f|
+= simple_nested_form_for @train_route, wrapper: :horizontal_form, html: {class: 'form-horizontal'} do |f|
   = f.error_notification
 
   .form-inputs
     = f.input :code
     = f.input :name
-    = f.association :stations, as: :check_boxes
+    .nested_train_route_stations
+      = f.label "train_route_stations", class: 'control-label'
+      = f.simple_fields_for :train_route_stations do |train_route_station|
+        -# f.hidden_field :id がないと削除できない
+        = f.hidden_field :id
+        = train_route_station.input :distance
+        = train_route_station.association :station
+        .form-group
+          .col-sm-3
+          .col-sm-9
+            = train_route_station.link_to_remove "Remove"
+      
+      = f.link_to_add "Add", :train_route_stations
+
 
   .form-actions
     = f.button :submit

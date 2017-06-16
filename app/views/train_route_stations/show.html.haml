@@ -1,0 +1,38 @@
+%p#notice= notice
+
+-# %p
+-#   %b Train route:
+-#   = @train_route_station.train_route.name
+-# %p
+-#   %b Station:
+-#   = @train_route_station.station.name
+-# %p
+-#   %b Distance:
+-#   = @train_route_station.distance
+-# %p
+-#   %b Row order:
+-#   = @train_route_station.row_order
+
+
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th key
+      %th value
+  %tbody
+    %tr
+      %td train_route.name
+      %td= @train_route_station.train_route.name
+    %tr
+      %td station.name
+      %td= @train_route_station.station.name
+    %tr
+      %td distance
+      %td= @train_route_station.distance
+    %tr
+      %td row_order
+      %td= @train_route_station.row_order
+
+= link_to 'Edit', edit_train_route_station_path(@train_route_station)
+\|
+= link_to 'Back', train_route_stations_path

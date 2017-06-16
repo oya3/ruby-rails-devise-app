@@ -1,5 +1,6 @@
 class Station < ActiveRecord::Base
-  has_and_belongs_to_many :train_routes
+  has_many :train_route_stations, dependent: :destroy
 
   validates :code, uniqueness: true
+  validates :name, presence: true
 end

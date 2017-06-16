@@ -3,7 +3,7 @@
     %li= link_to 'users', admin_users_path
   %li= link_to 'stations', stations_path
   %li= link_to 'train_routes', train_routes_path
-  %li= link_to 'distances', distances_path
+  %li= link_to 'train_route_stations', train_route_stations_path
   %li= link_to current_user.username + '(' + current_user.roles_name[0] + ')', edit_user_registration_path
   %li= link_to 'Sign out', destroy_user_session_path, method: :delete
 - else
