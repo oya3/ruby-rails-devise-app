@@ -48,11 +48,12 @@ class TrainRoutesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_train_route
       @train_route = TrainRoute.find(params[:id])
+      # @train_route_stations = @train_route.train_route_stations.rank(:row_order)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def train_route_params
       params.require(:train_route).permit(:code, :name,
-                                          :train_route_stations_attributes => [ :id, :distance, :station_id, :_destroy])
+                                          :train_route_stations_attributes => [ :id, :distance, :station_id, :row_order_position, :_destroy])
     end
 end

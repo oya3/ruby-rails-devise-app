@@ -1,24 +1,32 @@
 -# = simple_nested_form_for(@train_route) do |f|
-= simple_nested_form_for @train_route, wrapper: :horizontal_form, html: {class: 'form-horizontal'} do |f|
+-# = simple_nested_form_for @train_route, wrapper: :horizontal_form, html: {class: 'form-horizontal'} do |f|
+= simple_nested_form_for @train_route do |f|
   = f.error_notification
 
   .form-inputs
     = f.input :code
     = f.input :name
+    = f.label "train_route_stations"
     .nested_train_route_stations
-      = f.label "train_route_stations", class: 'control-label'
-      = f.simple_fields_for :train_route_stations do |train_route_station|
-        -# f.hidden_field :id がないと削除できない
-        = f.hidden_field :id
-        = train_route_station.input :distance
-        = train_route_station.association :station
-        .form-group
-          .col-sm-3
-          .col-sm-9
-            = train_route_station.link_to_remove "Remove"
-      
-      = f.link_to_add "Add", :train_route_stations
-
-
+      %table.table.table-striped.table-bordered.table-sortable-nested-form
+        -# wrapper: false と link_to_add の tr td がないと上手くテーブルとしてfieldsが追加できない
+        -# また、nested_from.js.coffee がないと上手くいかない。まったく理由がわからない。仕組みが理解できない。。。
+        -# = f.simple_fields_for :train_route_stations, wrapper: false do |train_route_station|
+        = f.simple_fields_for :train_route_stations, @train_route.train_route_stations.rank(:row_order), wrapper: false do |train_route_station|
+          %tr.nested-item
+            -# f.hidden_field :id がないと削除できない
+            = f.hidden_field :id
+            -# 並び替え用フィールド
+            = train_route_station.hidden_field :row_order_position, class: :position
+            -# label: false でラベルが表示されなくなる
+            %td= train_route_station.input :distance, label: false
+            %td= train_route_station.association :station, label: false
+            %td.form-group
+              .col-sm-3
+              .col-sm-9
+                = train_route_station.link_to_remove "Remove", class: "btn btn-danger"
+        %tr
+          %td= f.link_to_add "Add", :train_route_stations
+  
   .form-actions
     = f.button :submit
