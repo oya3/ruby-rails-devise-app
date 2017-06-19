@@ -8,7 +8,11 @@
     = f.input :name
     = f.label "train_route_stations"
     .nested_train_route_stations
-      %table.table.table-striped.table-bordered.table-sortable-nested-form
+      -# 以下のようなdata属性をつけてfields_for内の入力フィールドが未設定かを判断しようとしたが
+      -# 入力フィールドには、form-control 属性がそれぞれ付加されていたので、
+      -# $('.form-control').val() == '' とすることで未入力かが判断できるのでdata属性は不要となった
+      -# %table.table.table-striped.table-bordered.table-sortable-nested-form{data: {attr: "train_route_train_route_stations", values: '[".position",".station",".distance"]'} }
+      %table.table.table-striped.table-bordered.table-sortable-nested-form{data: {attr: "train_route_train_route_stations", values: '[".position",".station",".distance"]'} }
         %thead
           %tr
             %th station
@@ -27,7 +31,7 @@
             %tr.fields.nested-item
               -# f.hidden_field :id がないと削除できない
               = f.hidden_field :id
-              -# 並び替え用フィールド
+              -# 並び替え用フィールド。 class: :position は table_sort_nested_form.js.coffee で順番制御用に必要
               = train_route_station.hidden_field :row_order_position, class: :position
               -# label: false でラベルが表示されなくなる
               %td= train_route_station.association :station, label: false
