@@ -8,7 +8,9 @@ $ ->
     return
   $(document).on 'nested:fieldAdded nested:fieldRemoved', (event)->
     $temp = $(event.target)
-    $nested_logs = $temp.closest(".nested_logs") 
+    $nested_logs = $temp.closest(".nested_logs")
+    if $nested_logs.length == 0
+      return
     toggleAddLink($nested_logs)
     return
   $(document).find('.nested_logs').each ->

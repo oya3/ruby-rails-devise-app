@@ -23,7 +23,8 @@
       %th 
 
   %tbody
-  - @train_route.train_route_stations.order('row_order').each do |train_route_station|
+  -# - @train_route.train_route_stations.order('row_order').each do |train_route_station|
+  - @train_route.train_route_stations.rank(:row_order).each do |train_route_station|
     - station = Station.find(train_route_station.station)
     %tr.item{data: { model_name: train_route_station.class.name.underscore, update_url: train_route_station_sort_path(train_route_station) }}
       %td= station.code
