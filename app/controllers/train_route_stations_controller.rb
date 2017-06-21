@@ -11,7 +11,14 @@ class TrainRouteStationsController < ApplicationController
   # GET /train_route_stations
   # GET /train_route_stations.json
   def index
-    @train_route_stations = TrainRouteStation.all
+    # @train_route_stations = TrainRouteStation.all
+    # @train_route_stations = TrainRouteStation.ordered_by_train_route_code.order(:row_order)
+    @train_route_stations = TrainRouteStation.with_train_route.order("train_routes.code", :row_order)
+    @train_routes = TrainRoute.order(:code)
+    @train_route_station_array = Array.new
+    @train_routes.each do |train_route|
+      @train_route_station_array << TrainRouteStation.with_train_route.where("train_routes.code = ?", train_route.code).order(:row_order)
+    end
   end
 
   # GET /train_route_stations/1

@@ -1,0 +1,20 @@
+.accordion
+  - @train_routes.each.with_index(0) do |train_route,index|
+    %h3= train_route.code.to_s + ':' + train_route.name
+    %div
+      %table.table.table-striped.table-bordered
+        %thead
+          %tr
+            -# %th Train route
+            %th Station
+            %th Distance
+            %th Row order
+
+        %tbody
+          - @train_route_station_array[index].each do |train_route_station|
+            %tr
+              -# %td= train_route_station.train_route.name
+              %td= train_route_station.station.name
+              %td= train_route_station.distance
+              %td= train_route_station.row_order
+
