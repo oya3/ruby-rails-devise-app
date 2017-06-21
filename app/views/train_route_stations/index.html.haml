@@ -1,27 +1,12 @@
 %h1 Listing train_route_stations
 
-%table.table.table-striped.table-bordered
-  %thead
-    %tr
-      %th Train route
-      %th Station
-      %th Distance
-      %th Row order
-      %th
-      %th
-      %th
-
-  %tbody
-    - @train_route_stations.each do |train_route_station|
-      %tr
-        %td= train_route_station.train_route.name
-        %td= train_route_station.station.name
-        %td= train_route_station.distance
-        %td= train_route_station.row_order
-        %td= link_to 'Show', train_route_station
-        %td= link_to 'Edit', edit_train_route_station_path(train_route_station)
-        %td= link_to 'Destroy', train_route_station, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Train route station', new_train_route_station_path
+.container
+  .row
+    .col-md-4
+      = render :partial => "list"
+    .col-md-8
+      -# = render :partial => "list"
+      #ol_map.ol_map{:style => "height:600px"}
+  .row
+    = link_to 'New Train route station', new_train_route_station_path
+    

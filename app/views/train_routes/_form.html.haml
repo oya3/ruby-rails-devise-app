@@ -26,6 +26,7 @@
           -# (@train_route.train_route_stations.order(:row_order), @train_route.train_route_stations.sort_by(&:row_order_position) の記載もあるが。。。)
           -#  上記のままだとlink_to_add（動的）した項目のバリデーションエラーになった場合、エラーフィールドが消失してしまう。
           -#  なので上記をやめて train_route_stations model に default_scope { order(:row_order) } を追加してソートさせる
+          -# = f.simple_fields_for :train_route_stations, f.object.train_route_stations.order(:row_order), wrapper: false do |train_route_station|
           = f.simple_fields_for :train_route_stations, wrapper: false do |train_route_station|
             -# .fields が無いと link_to_remove で削除できない
             %tr.fields.nested-item
