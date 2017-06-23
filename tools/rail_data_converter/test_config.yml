@@ -1,0 +1,74 @@
+# coding: utf-8
+content-type: ksj_convert
+content-version: 0.1
+
+contents:
+  name: test
+  description: "N02Datasetから取得"
+  infile: "N02-13.xml"
+  outfile: "seeds.rb"
+  train_routes:
+    - name: 東海道線
+      company: 西日本旅客鉄道
+      stations:
+        - name: 米原
+        - name: 彦根
+        - name: 南彦根
+        - name: 河瀬
+        - name: 稲枝
+        - name: 能登川
+        - name: 安土
+        - name: 近江八幡
+        - name: 篠原
+        - name: 野洲
+        - name: 守山
+        - name: 栗東
+        - name: 草津
+        - name: 南草津
+        - name: 瀬田
+        - name: 石山
+        - name: 膳所
+        - name: 大津
+        - name: 山科
+        - name: 京都
+    
+    - name: 湖西線
+      company: 西日本旅客鉄道
+      stations:
+        - name: 山科
+        - name: 大津京
+        - name: 唐崎
+        - name: 比叡山坂本
+        - name: おごと温泉
+        - name: 堅田
+        - name: 小野
+        - name: 和邇
+        - name: 蓬莱
+        - name: 志賀
+        - name: 比良
+        - name: 近江舞子
+        - name: 北小松
+        - name: 近江高島
+        - name: 安曇川
+        - name: 新旭
+        - name: 近江今津
+        - name: 近江中庄
+        - name: マキノ
+        - name: 永原
+        - name: 近江塩津
+    
+    - name: 草津線
+      company: 西日本旅客鉄道
+      stations:
+        - name: 草津
+        - name: 手原
+        - name: 石部
+        - name: 甲西
+        - name: 三雲
+        - name: 貴生川
+        - name: 甲南
+        - name: 寺庄
+        - name: 甲賀
+        - name: 油日
+        - name: 柘植
+
