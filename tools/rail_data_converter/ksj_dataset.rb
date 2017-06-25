@@ -44,6 +44,7 @@ module KSJDataset
           posArray << pos
         end
       end
+      raise "get_xml_curves error." if posArray.size == 0
       curves[key] = posArray
       "# #{key}"
     end

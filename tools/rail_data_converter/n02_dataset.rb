@@ -5,9 +5,9 @@ require 'ksj_dataset'
 class N02Dataset
   include KSJDataset
   # 内部 :description, :bound, :curves, :sections, :stations
-  attr_accessor :description, :bound, :curves, :sections, :stations
+  attr_accessor  :description, :bound, :curves, :sections, :stations
   # 外部 :train_routes, :file_name
-  attr_accessor :train_routes, :file_name
+  attr_accessor :contents, :train_routes, :file_name
   class Curve
     attr_accessor :key, :pos_array, :size
     def initialize(key, pos_array)
@@ -24,10 +24,20 @@ class N02Dataset
     end
   end
 
-  def initialize(train_routes, file_name)
-    @train_routes = train_routes
-    @file_name = file_name
+  def initialize(contents)
+    @contents = contents
+    @train_routes = contents[:train_routes]
+    @file_name = contents[:infile]
     load_file @file_name
+    
+    # n02datasetを保持させておく
+    @contents[:n02dataset] = Hash.new
+    @contents[:n02dataset][:description] = @description
+    @contents[:n02dataset][:bound] = @bound
+    @contents[:n02dataset][:curves] = @curves
+    @contents[:n02dataset][:sections] = @sections
+    @contents[:n02dataset][:stations] = @stations
+    
     setup_train_route
     make_between_station_curve
   end
@@ -161,6 +171,7 @@ class N02Dataset
   def load_file(file_name)
     begin
       file_body = File.read file_name.encode('cp932')
+      file_body.gsub!("\r\n","\n") # mac だけ必要?
       
       # 不要なヘッダ削除
       file_body.gsub!(/\<\?xml version=\"1\.0\" encoding\=\"UTF\-8\" \?\>/) { "# xml" }
