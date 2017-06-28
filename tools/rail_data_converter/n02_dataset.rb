@@ -122,7 +122,7 @@ class N02Dataset
         end
         section_keys = Array.new
         for num in start_number..end_number do
-          section_keys << "e02_#{num}"
+          section_keys << "eb02_#{num}"
         end
         # train_routes.stationsに:section_keys追加
         train_route[:stations][i+0][:section_keys] = section_keys
