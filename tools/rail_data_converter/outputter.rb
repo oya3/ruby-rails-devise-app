@@ -65,7 +65,7 @@ USERS_END
         binding.pry
       end
       curves[curve_name].each do |curve|
-        out << "curve.postions.create(lat: '#{curve[:lat]}', lng: '#{curve[:lng]}')"
+        out << "curve.points.create(lat: '#{curve[:lat]}', lng: '#{curve[:lng]}')"
       end
     end
   end
@@ -86,7 +86,7 @@ USERS_END
         # 駅カーブ追加
         curve_name = n02dataset[:stations][ station[:keys][0] ][:location]
         out << "section = Section.new(name: '#{station[:keys][0]}')"
-        out << "cureve = Curve.find_by(name: '#{curve_name}')"
+        out << "curve = Curve.find_by(name: '#{curve_name}')"
         out << "section.curves << curve"
         out << "train_route_station.sections << section"
       end
