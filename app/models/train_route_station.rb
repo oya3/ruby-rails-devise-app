@@ -1,6 +1,6 @@
 # coding: utf-8
 class TrainRouteStation < ActiveRecord::Base
-  has_many :sections, as: :sectionable
+  has_many :railsections, as: :railsectionable
   belongs_to :train_route
   belongs_to :station
   include RankedModel
