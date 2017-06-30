@@ -53,23 +53,25 @@ USERS_END
     end
   end
 
+
+  # curve は railway とする
   def make_curves
     out = Array.new
     @results[:curves] = out
     n02dataset = @contents[:n02dataset]
     curves = n02dataset[:curves]
     @info_curves.each.with_index(1) do |(curve_name,id),index|
-      # out << "curve = Curve.create(code: #{index}, name: '#{curve_name}')"
-      out << "curve = Curve.create( name: '#{curve_name}')"
+      out << "railway = Railway.create( name: '#{curve_name}')"
       if curves[curve_name].nil?
         binding.pry
       end
       curves[curve_name].each do |curve|
-        out << "curve.points.create(lat: '#{curve[:lat]}', lng: '#{curve[:lng]}')"
+        out << "railway.points.create(lat: '#{curve[:lat]}', lng: '#{curve[:lng]}')"
       end
     end
   end
 
+  # section は railsection とする
   def make_train_routes
     train_routes = @contents[:train_routes]
     n02dataset = @contents[:n02dataset]
@@ -85,10 +87,10 @@ USERS_END
         out << "train_route.train_route_stations << train_route_station"
         # 駅カーブ追加
         curve_name = n02dataset[:stations][ station[:keys][0] ][:location]
-        out << "section = Section.new(name: '#{station[:keys][0]}')"
-        out << "curve = Curve.find_by(name: '#{curve_name}')"
-        out << "section.curves << curve"
-        out << "train_route_station.sections << section"
+        out << "railsection = Railsection.new(name: '#{station[:keys][0]}')"
+        out << "railway = Railway.find_by(name: '#{curve_name}')"
+        out << "railsection.railways << railway"
+        out << "train_route_station.railsections << railsection"
       end
     end
   end
