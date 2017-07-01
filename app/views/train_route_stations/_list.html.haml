@@ -12,7 +12,7 @@
 
         %tbody
           - @train_route_station_array[index].each do |train_route_station|
-            %tr
+            %tr.railway{ data: { model_name: train_route_station.class.name.underscore, get_url: train_route_station_get_railway_path(train_route_station) } }
               -# %td= train_route_station.train_route.name
               %td= train_route_station.station.name
               %td= train_route_station.distance

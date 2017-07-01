@@ -5,7 +5,7 @@ content-version: 0.1
 contents:
   name: test
   description: "N02Datasetから取得"
-  infile: "N02-13.xml"
+  infile: "N02-15.xml"
   outfile: "seeds.rb"
   train_routes:
     # - name: 東海道線

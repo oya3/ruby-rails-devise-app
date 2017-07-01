@@ -20,6 +20,7 @@ class Outputter
     make_curves
     make_train_routes
     all = Array.new
+    all << ["# #{Date.today}"]
     all << ["# --- users ---"]
     all << @results[:users]
     all << ["\n# -- stations ---"]
@@ -72,6 +73,12 @@ USERS_END
   end
 
   # section は railsection とする
+  # train_route = TrainRoute.create(code: '1', name: '草津線')
+  # train_route_station = TrainRouteStation.create(station: Station.find_by(name: '油日'))
+  # train_route.train_route_stations << train_route_station
+  # railsection = Railsection.create(name: 'eb03_4339')
+  # railsection.railways << Railway.find_by(name: 'cv_stn4339')
+  # train_route_station.railsections << railsection
   def make_train_routes
     train_routes = @contents[:train_routes]
     n02dataset = @contents[:n02dataset]
@@ -83,13 +90,12 @@ USERS_END
       # 駅
       train_route[:stations].each.with_index(0) do |station,station_code|
         # 駅追加
-        out << "train_route_station = TrainRouteStation.new(station_id: Station.find_by(name: '#{station[:name]}').id)"
+        out << "train_route_station = TrainRouteStation.create(station: Station.find_by(name: '#{station[:name]}'))"
         out << "train_route.train_route_stations << train_route_station"
         # 駅カーブ追加
         curve_name = n02dataset[:stations][ station[:keys][0] ][:location]
-        out << "railsection = Railsection.new(name: '#{station[:keys][0]}')"
-        out << "railway = Railway.find_by(name: '#{curve_name}')"
-        out << "railsection.railways << railway"
+        out << "railsection = Railsection.create(name: '#{station[:keys][0]}')"
+        out << "railsection.railways << Railway.find_by(name: '#{curve_name}')"
         out << "train_route_station.railsections << railsection"
       end
     end

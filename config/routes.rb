@@ -1,7 +1,9 @@
+# coding: utf-8
 Rails.application.routes.draw do
   #resources :train_route_stations
   resources :train_route_stations do
-   put :sort
+    put :sort # 並び替え ajax api
+    get :get_railway # 線路情報を取得する ajax api
   end
   resources :train_routes
   resources :stations

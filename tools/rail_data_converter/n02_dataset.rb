@@ -172,9 +172,10 @@ class N02Dataset
     begin
       file_body = File.read file_name.encode('cp932')
       file_body.gsub!("\r\n","\n") # mac だけ必要?
-      
+
       # 不要なヘッダ削除
-      file_body.gsub!(/\<\?xml version=\"1\.0\" encoding\=\"UTF\-8\" \?\>/) { "# xml" }
+      # <?xml version=\"1.0\" encoding=\"UTF-8\"?>
+      file_body.gsub!(/\<\?xml version\=.+?\?\>/) { "# xml" }
       file_body.gsub!(/\<ksj\:Dataset gml\:id=\".+?\".+?\>/m) { "# ksj:Dataset" }
       file_body.gsub!(/\<\/ksj\:Dataset\>/) { "# \/ksj:Dataset" }
       
@@ -195,7 +196,7 @@ class N02Dataset
   
       # 取りこぼしデータチェック
       if file_body =~ /[\<\>]/
-        raise "取りこぼしている"
+        raise "取りこぼしている\n#{file_body}"
       end
     rescue => exception
       puts "Exception:#{exception.message}"

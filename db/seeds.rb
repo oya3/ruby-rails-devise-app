@@ -1,3 +1,4 @@
+# 2017-07-01
 # --- users ---
 user_admin = Role.find_or_create_by({name: :admin}) # admin権限
 user_member = Role.find_or_create_by({name: :member}) # member権限
@@ -14,36 +15,34 @@ Station.create(code: 1, name: '油日')
 Station.create(code: 2, name: '柘植')
 
 # -- curves ---
-railway = Railway.create( name: 'cv_stn4339')
-railway.points.create(lat: '136.23014000', lng: '34.88912000')
-railway.points.create(lat: '136.22904000', lng: '34.89027000')
-railway = Railway.create( name: 'cv_rss8934')
-railway.points.create(lat: '136.25659000', lng: '34.84601000')
-railway.points.create(lat: '136.25574000', lng: '34.84749000')
-railway = Railway.create( name: 'cv_rss8935')
-railway.points.create(lat: '136.25445000', lng: '34.84971000')
-railway.points.create(lat: '136.25450000', lng: '34.84962000')
-railway.points.create(lat: '136.25465000', lng: '34.84937000')
-railway.points.create(lat: '136.25525000', lng: '34.84837000')
-railway.points.create(lat: '136.25574000', lng: '34.84749000')
-railway = Railway.create( name: 'cv_rss8936')
-railway.points.create(lat: '136.23014000', lng: '34.88912000')
-railway.points.create(lat: '136.22904000', lng: '34.89027000')
-railway = Railway.create( name: 'cv_stn4341')
-railway.points.create(lat: '136.25659000', lng: '34.84601000')
-railway.points.create(lat: '136.25574000', lng: '34.84749000')
+railway = Railway.create( name: 'cv_sta4370')
+railway.points.create(lat: '136.230140000', lng: '34.889120000')
+railway.points.create(lat: '136.229040000', lng: '34.890270000')
+railway = Railway.create( name: 'cv_rss9127')
+railway.points.create(lat: '136.256590000', lng: '34.846010000')
+railway.points.create(lat: '136.255740000', lng: '34.847490000')
+railway = Railway.create( name: 'cv_rss8751')
+railway.points.create(lat: '136.254450000', lng: '34.849710000')
+railway.points.create(lat: '136.254500000', lng: '34.849620000')
+railway.points.create(lat: '136.254650000', lng: '34.849370000')
+railway.points.create(lat: '136.255250000', lng: '34.848370000')
+railway.points.create(lat: '136.255740000', lng: '34.847490000')
+railway = Railway.create( name: 'cv_rss9326')
+railway.points.create(lat: '136.230140000', lng: '34.889120000')
+railway.points.create(lat: '136.229040000', lng: '34.890270000')
+railway = Railway.create( name: 'cv_sta4123')
+railway.points.create(lat: '136.256590000', lng: '34.846010000')
+railway.points.create(lat: '136.255740000', lng: '34.847490000')
 
 # -- train_routes ---
 train_route = TrainRoute.create(code: '1', name: '草津線')
-train_route_station = TrainRouteStation.new(station_id: Station.find_by(name: '油日').id)
+train_route_station = TrainRouteStation.create(station: Station.find_by(name: '油日'))
 train_route.train_route_stations << train_route_station
-railsection = Railsection.new(name: 'eb03_4339')
-railway = Railway.find_by(name: 'cv_stn4339')
-railsection.railways << railway
+railsection = Railsection.create(name: 'eb03_5338')
+railsection.railways << Railway.find_by(name: 'cv_sta4370')
 train_route_station.railsections << railsection
-train_route_station = TrainRouteStation.new(station_id: Station.find_by(name: '柘植').id)
+train_route_station = TrainRouteStation.create(station: Station.find_by(name: '柘植'))
 train_route.train_route_stations << train_route_station
-railsection = Railsection.new(name: 'eb03_4341')
-railway = Railway.find_by(name: 'cv_stn4341')
-railsection.railways << railway
+railsection = Railsection.create(name: 'eb03_5340')
+railsection.railways << Railway.find_by(name: 'cv_sta4123')
 train_route_station.railsections << railsection
