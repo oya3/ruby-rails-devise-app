@@ -1,0 +1,1 @@
+json.partial! "between_train_route_stations/between_train_route_station", between_train_route_station: @between_train_route_station

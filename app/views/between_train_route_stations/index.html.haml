@@ -1,0 +1,23 @@
+%h1 Listing between_train_route_stations
+
+%table
+  %thead
+    %tr
+      %th Train route station1
+      %th Train route station2
+      %th
+      %th
+      %th
+
+  %tbody
+    - @between_train_route_stations.each do |between_train_route_station|
+      %tr
+        %td= between_train_route_station.train_route_station1
+        %td= between_train_route_station.train_route_station2
+        %td= link_to 'Show', between_train_route_station
+        %td= link_to 'Edit', edit_between_train_route_station_path(between_train_route_station)
+        %td= link_to 'Destroy', between_train_route_station, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Between train route station', new_between_train_route_station_path

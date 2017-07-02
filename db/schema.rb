@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170630070639) do
+ActiveRecord::Schema.define(version: 20170702114808) do
+
+  create_table "between_train_route_stations", force: :cascade do |t|
+    t.integer  "train_route_station1_id"
+    t.integer  "train_route_station2_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "between_train_route_stations", ["train_route_station1_id"], name: "index_between_train_route_stations_on_train_route_station1_id"
+  add_index "between_train_route_stations", ["train_route_station2_id"], name: "index_between_train_route_stations_on_train_route_station2_id"
 
   create_table "points", force: :cascade do |t|
     t.integer  "railway_id"

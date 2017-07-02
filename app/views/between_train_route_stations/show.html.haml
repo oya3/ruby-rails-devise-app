@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Train route station1:
+  = @between_train_route_station.train_route_station1
+%p
+  %b Train route station2:
+  = @between_train_route_station.train_route_station2
+
+= link_to 'Edit', edit_between_train_route_station_path(@between_train_route_station)
+\|
+= link_to 'Back', between_train_route_stations_path

@@ -19,6 +19,8 @@ class Outputter
     make_stations
     make_curves
     make_train_routes
+    make_between_train_route_stations
+
     all = Array.new
     all << ["# #{Date.today}"]
     all << ["# --- users ---"]
@@ -29,6 +31,8 @@ class Outputter
     all << @results[:curves]
     all << ["\n# -- train_routes ---"]
     all << @results[:train_routes]
+    all << ["\n# -- between_train_route_stations ---"]
+    all << @results[:between_train_route_stations]
     return all.join "\n"
   end
 
@@ -97,6 +101,31 @@ USERS_END
         out << "railsection = Railsection.create(name: '#{station[:keys][0]}')"
         out << "railsection.railways << Railway.find_by(name: '#{curve_name}')"
         out << "train_route_station.railsections << railsection"
+      end
+    end
+  end
+
+  def make_between_train_route_stations
+    train_routes = @contents[:train_routes]
+    n02dataset = @contents[:n02dataset]
+    out = Array.new
+    @results[:between_train_route_stations] = out
+    # 路線
+    train_routes.each do |train_route|
+      # 駅
+      (train_route[:stations].size-1).times do |i|
+        train_route_station1 = train_route[:stations][i]
+        train_route_station2 = train_route[:stations][i+1]
+        out << "train_route_station1 = TrainRouteStation.find_by(station: Station.find_by(name: '#{train_route_station1[:name]}'))"
+        out << "train_route_station2 = TrainRouteStation.find_by(station: Station.find_by(name: '#{train_route_station2[:name]}'))"
+        out << "between_train_route_station = BetweenTrainRouteStation.create(train_route_station1: train_route_station1,"
+        out << "                                                              train_route_station2: train_route_station2)"
+        train_route_station1[:section_keys].each do |section_name|
+          curve_name = n02dataset[:sections][section_name][:location]
+          out << "railsection = Railsection.create(name: '#{section_name}')"
+          out << "railsection.railways << Railway.find_by(name: '#{curve_name}')"
+          out << "between_train_route_station.railsections << railsection"
+        end
       end
     end
   end

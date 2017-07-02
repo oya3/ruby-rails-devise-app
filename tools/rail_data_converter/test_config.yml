@@ -60,15 +60,15 @@ contents:
     - name: 草津線
       company: 西日本旅客鉄道
       stations:
-        # - name: 草津
-        # - name: 手原
-        # - name: 石部
-        # - name: 甲西
-        # - name: 三雲
-        # - name: 貴生川
-        # - name: 甲南
-        # - name: 寺庄
-        # - name: 甲賀
+        - name: 草津
+        - name: 手原
+        - name: 石部
+        - name: 甲西
+        - name: 三雲
+        - name: 貴生川
+        - name: 甲南
+        - name: 寺庄
+        - name: 甲賀
         - name: 油日
         - name: 柘植
 

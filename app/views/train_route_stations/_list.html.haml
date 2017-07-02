@@ -7,14 +7,22 @@
           %tr
             -# %th Train route
             %th Station
+            %th Next
             %th Distance
             %th Row order
 
         %tbody
-          - @train_route_station_array[index].each do |train_route_station|
-            %tr.railway{ data: { model_name: train_route_station.class.name.underscore, get_url: train_route_station_get_railway_path(train_route_station) } }
+          - @train_route_station_array[index].each.with_index(0) do |train_route_station,train_route_station_index|
+            -# %tr.railway{ data: { model_name: train_route_station.class.name.underscore, get_url: train_route_station_get_railway_path(train_route_station) } }
+            %tr
               -# %td= train_route_station.train_route.name
-              %td= train_route_station.station.name
+              %td.railway{ data: { model_name: train_route_station.class.name.underscore, get_url: train_route_station_get_railway_path(train_route_station) } }= train_route_station.station.name
+              - if train_route_station_index != (@train_route_station_array[index].size - 1)
+                - train_route_station_next = @train_route_station_array[index][train_route_station_index+1]
+                - between_train_route_station = BetweenTrainRouteStation.first
+                %td.railway{ data: { model_name: between_train_route_station.class.name.underscore, get_url: between_train_route_station_get_railway_path(1) } }= train_route_station_next.station.name
+              -else
+                %td= "-"
               %td= train_route_station.distance
               %td= train_route_station.row_order
 
