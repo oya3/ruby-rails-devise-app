@@ -1,4 +1,4 @@
-# 2017-07-01
+# 2017-07-02
 # --- users ---
 user_admin = Role.find_or_create_by({name: :admin}) # admin権限
 user_member = Role.find_or_create_by({name: :member}) # member権限

@@ -24,6 +24,114 @@ class N02Dataset
     end
   end
 
+  # # 入力される contents 情報
+  # contents  = {
+  #   "name"=>"test",
+  #   "description"=>"N02Datasetから取得",
+  #   "infile"=>"N02-15.xml",
+  #   "outfile"=>"seeds.rb",
+  #   "train_routes"=>[
+  #     {"name"=>"草津線",
+  #      "company"=>"西日本旅客鉄道",
+  #      "stations"=>[
+  #        {"name"=>"油日"},
+  #        {"name"=>"柘植"}
+  #      ]
+  #     },
+  #   ]
+  # }
+  #
+  # # 本関数で contents に追加される内容
+  # contents  = {
+  #   "train_routes"=>[
+  #     {"name"=>"草津線",
+  #      "company"=>"西日本旅客鉄道",
+  #      "stations"=>[
+  #        {
+  #          "name"=>"油日",
+  #          "keys"=>["eb03_5338"], # 駅ホームのカーブ情報が付加される
+  #          "section_keys"=>["eb02_11933", "eb02_11934", "eb02_11935"] # 次の駅までの線路カーブ情報
+  #        },
+  #        {
+  #          "name"=>"柘植",
+  #          "keys"=>["eb03_5340"], # 駅ホームのカーブ情報が付加される
+  #          # 次の駅が存在しないので路線カーブ情報は無い
+  #        }
+  #      ],
+  #      # この路線の全線路カーブ情報
+  #      "section_keys"=>[
+  #        "eb02_11913",
+  #        "eb02_11917",
+  #        "eb02_11918",
+  #        "eb02_11920",
+  #        "eb02_11921",
+  #        "eb02_11924",
+  #        "eb02_11925",
+  #        "eb02_11926",
+  #        "eb02_11927",
+  #        "eb02_11929",
+  #        # ...
+  #      ]
+  #     },
+  #   ],
+  #   "n02dataset"=>{
+  #     "description"=> "国土数値情報 N02-15.xml",
+  #     "bound"=>{
+  #       "src_name"=>"JGD2011 / (B, L)",
+  #       "frame"=>"GC / JST",
+  #       "lower_corner"=>{"lat"=>"26.193190000", "lng"=>"127.652280000"},
+  #       "upper_corner"=>{"lat"=>"45.416880000", "lng"=>"145.597430000"},
+  #       "bigin_position"=>{"calendar_era_name"=>"西暦", "year"=>"1900"}
+  #     },
+  #     "curves"=>{
+  #       "cv_sta1"=>[
+  #         {"lat"=>"141.286590000", "lng"=>"40.260920000"},
+  #         {"lat"=>"141.285380000", "lng"=>"40.258740000"}
+  #       ],
+  #       "cv_sta2"=>[
+  #         {"lat"=>"141.290820000", "lng"=>"40.286150000"},
+  #         {"lat"=>"141.290890000", "lng"=>"40.285820000"}
+  #       ]
+  #     },
+  #     "sections"=>{
+  #       "eb02_3000"=>{
+  #         "location"=>"cv_rss1",
+  #         "railway_type"=>"23",
+  #         "service_provider_type"=>"5",
+  #         "railway_line_name"=>"沖縄都市モノレール線",
+  #         "operation_company"=>"沖縄都市モノレール"
+  #       },
+  #       "eb02_3001"=>{
+  #         "location"=>"cv_rss2",
+  #         "railway_type"=>"12",
+  #         "service_provider_type"=>"5",
+  #         "railway_line_name"=>"いわて銀河鉄道線",
+  #         "operation_company"=>"アイジーアールいわて銀河鉄道"
+  #       }
+  #     }
+  #     "stations"=>{
+  #       "eb03_1053"=>{
+  #         "location"=>"cv_sta1",
+  #         "railway_type"=>"12",
+  #         "service_provider_type"=>"5",
+  #         "railway_line_name"=>"いわて銀河鉄道線",
+  #         "operation_company"=>"アイジーアールいわて銀河鉄道",
+  #         "station_name"=>"二戸",
+  #         "railroad_section"=>"eb02_3003"
+  #       },
+  #       "eb03_1056"=>{
+  #         "location"=>"cv_sta2",
+  #         "railway_type"=>"12",
+  #         "service_provider_type"=>"5",
+  #         "railway_line_name"=>"いわて銀河鉄道線",
+  #         "operation_company"=>"アイジーアールいわて銀河鉄道",
+  #         "station_name"=>"斗米",
+  #         "railroad_section"=>"eb02_3004"
+  #       }
+  #     }
+  #   }
+  # }
+  
   def initialize(contents)
     @contents = contents
     @train_routes = contents[:train_routes]
@@ -96,7 +204,13 @@ class N02Dataset
     end
     raise "get_section_key エラー"
   end
-  
+
+
+  # train_routes(路線情報) に紐づく駅(stations)の順番通りの駅間の線路情報を作成する
+  # 例えば、train_routes[0].stations[0]（駅1) と train_routes[0].stations[1] (駅2)の場合、
+  # この路線の全路線カーブ情報から、駅１、駅２の駅ホームのカーブ情報にマッチする路線情報名(eb02_xxx)を
+  # 抽出し、２つの路線情報の間にある路線情報が駅間の路線情報名とする。
+  # 抽出した路線情報名が駅１がeb02_001、駅２がeb02_003 の場合、eb02_001,eb02_002,eb02_003 が駅間の路線情報となる
   def make_between_station_curve
     @train_routes.each do |train_route|
       between_stations = train_route[:stations].size - 1 # 駅間数
@@ -104,22 +218,25 @@ class N02Dataset
       between_stations.times do |i|
         mt = Array.new
         2.times do |j|
-          station = train_route[:stations][i+j]
+          station = train_route[:stations][i+j] # 
           curve = get_station_curve station[:keys][0]
-          # train_routeに所属するsection情報から curve.pos_arrayと同じ
-          # カーブポジションを持ってるsection_keyを取得する
+          # この路線(train_route)の全路線カーブ情報から駅(station)の駅ホームカーブと
+          # 同じ値のカーブ情報である路線情報名を取得する
           section_key = get_section_key(train_route[:section_keys],curve.pos_array)
           mt[j] = section_key.match(/eb02_(\d+)/)
         end
+        # 同じ値のカーブ情報が見つからない場合は異常事態とする
         if mt[0].nil? || mt[1].nil?
           raise "make_between_station_curve エラー"
         end
+        # eb02_xxx(数値) から間の数値を算出するため駅１、駅２を昇順にする
         start_number = mt[0][1].to_i
         end_number = mt[1][1].to_i
         if start_number > end_number
           start_number = mt[1][1].to_i
           end_number = mt[0][1].to_i
         end
+        # 駅間の番号を作成する
         section_keys = Array.new
         for num in start_number..end_number do
           section_keys << "eb02_#{num}"
@@ -141,6 +258,7 @@ class N02Dataset
   #  :bigin_position=>{:calendar_era_name=>"西暦", :year=>"1900"},
   #  :end_position=>{:indeterminate_position=>"unknown"}}
   #
+  # 経度,緯度の連続情報から曲線を表すデータ群
   # :curves
   # =>"cv_rss1"=>
   #   [{:lat=>"127.67948000", :lng=>"26.21454000"},
@@ -151,6 +269,7 @@ class N02Dataset
   #    {:lat=>"127.68394000", :lng=>"26.21891000"},
   #    {:lat=>"127.68419000", :lng=>"26.21905000"}],
   #
+  # :curve情報がどの路線に紐づくかを表すデータ群
   # :sections
   # =>"eb02_3"=>
   #   {:location=>"cv_rss3",
@@ -159,6 +278,7 @@ class N02Dataset
   #    :railway_line_name=>"いわて銀河鉄道線",
   #    :operation_company=>"アイジーアールいわて銀河鉄道"},
   #
+  # 路線名、鉄道会社、駅名の情報を表すデータ群。またその駅の位置(駅ホームのカーブ)情報も持つ
   # :stations
   # =>"eb03_1"=>
   #   {:location=>"cv_stn1",
