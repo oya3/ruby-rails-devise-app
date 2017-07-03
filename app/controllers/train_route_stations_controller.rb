@@ -36,8 +36,17 @@ class TrainRouteStationsController < ApplicationController
     # どうやってデータを取得するのがいいかは不明。。。チェーンメソッドでやりくりできるはず。。。
     @train_routes = TrainRoute.order(:code)
     @train_route_station_array = Array.new
-    @train_routes.each do |train_route|
+    @between_train_route_station_array = Array.new
+    @train_routes.each.with_index(0) do |train_route, index|
+      # TrainRouteStation.with_train_route.where(..) は配列が戻ってくる
       @train_route_station_array << TrainRouteStation.with_train_route.where("train_routes.code = ?", train_route.code).order(:row_order)
+      
+      @between_train_route_station_array[index] = Array.new
+      (@train_route_station_array[index].size-1).times do |i|
+        between_train_route_station = BetweenTrainRouteStation.find_by( train_route_station1: @train_route_station_array[index][i],
+                                                                        train_route_station2: @train_route_station_array[index][i+1] )
+        @between_train_route_station_array[index] << between_train_route_station
+      end
     end
   end
 

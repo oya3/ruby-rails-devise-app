@@ -134,8 +134,11 @@ class N02Dataset
   
   def initialize(contents)
     @contents = contents
+    raise "n02_dataset#initialize error 00" unless contents.has_key? :train_routes
+    raise "n02_dataset#initialize error 01" unless contents.has_key? :infile
     @train_routes = contents[:train_routes]
     @file_name = contents[:infile]
+    raise "n02_dataset#initialize error 02" unless File.exist?(@file_name)
     load_file @file_name
     
     # n02datasetを保持させておく
@@ -205,7 +208,88 @@ class N02Dataset
     raise "get_section_key エラー"
   end
 
+  # 指定したsection_nameの先頭、末尾の位置情報を返す
+  # return [
+  #   {"lat"=>"141.290820000", "lng"=>"40.286150000"}, # 0: first
+  #   {"lat"=>"141.290890000", "lng"=>"40.285820000"}  # 1: last
+  # }
+  def get_first_last_curve_point(section_key)
+    raise "get_first_last_curve_point error 00" unless @sections.has_key? section_key
+    section = @sections[section_key]
+    curve_points = @curves[section[:location]]
+    raise "get_first_last_curve_point error 01" if curve_points.size <= 1
+    last_index = curve_points.size - 1
+    return [curve_points[0], curve_points[last_index]]
+  end
+  
+  # 指定したpointがfirst,lastにあるsection_nameを得る
+  def find_section_name(all_names, point)
+    all_names.each do |key,value|
+      next if value == :use
+      first_last_point = get_first_last_curve_point(key)
+      2.times do |i|
+        if( first_last_point[i][:lat] == point[:lat] && first_last_point[i][:lng] == point[:lng] )
+          return {name: key, index: i, first_last_point: first_last_point}
+        end
+      end
+    end
+    return nil # 発見できない
+  end
+  
+  
+  # 指定したscetion_name1,section_name2間のsection名を取得する
+  def get_between_sections( section_name1, section_name2, section_name_keys)
+    all_names = Hash.new
+    section_name_keys.each do |name|
+      all_names[name] = :nouse
+    end
+    # 開始、終了のsection名があるか確認
+    raise "get_between_sections エラー 01" unless all_names.has_key? section_name1
+    raise "get_between_sections エラー 02" unless all_names.has_key? section_name2
+    all_names[section_name1] = :use
+    # all_names[section_name2] = :use
 
+    start_point = get_first_last_curve_point(section_name1)
+    end_point = get_first_last_curve_point(section_name2)
+
+    # first[0] and last[1] = 2 times
+    out = nil
+    complete = false
+    2.times do |i|
+      _out = Array.new
+      _out << section_name1
+      _all_names = all_names.clone
+      target_point = start_point[i]
+      while (find = find_section_name(_all_names, target_point))
+        index = find[:index]
+        point = find[:first_last_point][index]
+        _out << find[:name]
+        _all_names[find[:name]] = :use
+        # 探し出したpointがend_pointのfirstかlastにマッチしたか確認
+        2.times do |i|
+          if( end_point[i][:lat] == point[:lat] && end_point[i][:lng] == point[:lng] )
+            complete = true
+            break
+          end
+        end
+        if complete
+          break
+        end
+        # 次のsection名を探す
+        target_point = index == 0 ? find[:first_last_point][1]: find[:first_last_point][0]
+      end
+      if complete
+        out = _out
+        break
+      end
+    end
+    if out.nil?
+      binding.pry
+      puts "異常だ error"
+    end
+    return out
+  end
+  
   # train_routes(路線情報) に紐づく駅(stations)の順番通りの駅間の線路情報を作成する
   # 
   # 以下の方法では対応できなかった。2017/07/03
@@ -231,20 +315,24 @@ class N02Dataset
         if mt[0].nil? || mt[1].nil?
           raise "make_between_station_curve エラー"
         end
-        # eb02_xxx(数値) から間の数値を算出するため駅１、駅２を昇順にする
-        start_number = mt[0][1].to_i
-        end_number = mt[1][1].to_i
-        if start_number > end_number
-          start_number = mt[1][1].to_i
-          end_number = mt[0][1].to_i
-        end
-        # 駅間の番号を作成する
-        section_keys = Array.new
-        for num in start_number..end_number do
-          section_keys << "eb02_#{num}"
-        end
-        # train_routes.stationsに:section_keys追加
-        train_route[:stations][i+0][:section_keys] = section_keys
+        # 実験 2017/07/03
+        between_sections = get_between_sections("eb02_#{mt[0][1]}", "eb02_#{mt[1][1]}", train_route[:section_keys] )
+        train_route[:stations][i+0][:section_keys] = between_sections
+        
+        # # eb02_xxx(数値) から間の数値を算出するため駅１、駅２を昇順にする
+        # start_number = mt[0][1].to_i
+        # end_number = mt[1][1].to_i
+        # if start_number > end_number
+        #   start_number = mt[1][1].to_i
+        #   end_number = mt[0][1].to_i
+        # end
+        # # 駅間の番号を作成する
+        # section_keys = Array.new
+        # for num in start_number..end_number do
+        #   section_keys << "eb02_#{num}"
+        # end
+        # # train_routes.stationsに:section_keys追加
+        # train_route[:stations][i+0][:section_keys] = section_keys
       end
     end
   end

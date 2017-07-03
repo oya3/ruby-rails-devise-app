@@ -7,6 +7,7 @@
     .col-md-8
       -# = render :partial => "list"
       #ol_map.ol_map{:style => "height:600px"}
+      %button.btn.btn-default.railway_delete delete
   .row
     = link_to 'New Train route station', new_train_route_station_path
     

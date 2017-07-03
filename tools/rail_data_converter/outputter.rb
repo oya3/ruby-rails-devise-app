@@ -94,7 +94,7 @@ USERS_END
       # 駅
       train_route[:stations].each.with_index(0) do |station,station_code|
         # 駅追加
-        out << "train_route_station = TrainRouteStation.create(station: Station.find_by(name: '#{station[:name]}'))"
+        out << "train_route_station = TrainRouteStation.create(train_route: train_route, station: Station.find_by(name: '#{station[:name]}'))"
         out << "train_route.train_route_stations << train_route_station"
         # 駅カーブ追加
         curve_name = n02dataset[:stations][ station[:keys][0] ][:location]
@@ -112,12 +112,13 @@ USERS_END
     @results[:between_train_route_stations] = out
     # 路線
     train_routes.each do |train_route|
+      out << "train_route = TrainRoute.find_by( name: '#{train_route[:name]}')"
       # 駅
       (train_route[:stations].size-1).times do |i|
         train_route_station1 = train_route[:stations][i]
         train_route_station2 = train_route[:stations][i+1]
-        out << "train_route_station1 = TrainRouteStation.find_by(station: Station.find_by(name: '#{train_route_station1[:name]}'))"
-        out << "train_route_station2 = TrainRouteStation.find_by(station: Station.find_by(name: '#{train_route_station2[:name]}'))"
+        out << "train_route_station1 = TrainRouteStation.find_by(train_route: train_route, station: Station.find_by(name: '#{train_route_station1[:name]}'))"
+        out << "train_route_station2 = TrainRouteStation.find_by(train_route: train_route, station: Station.find_by(name: '#{train_route_station2[:name]}'))"
         out << "between_train_route_station = BetweenTrainRouteStation.create(train_route_station1: train_route_station1,"
         out << "                                                              train_route_station2: train_route_station2)"
         train_route_station1[:section_keys].each do |section_name|
