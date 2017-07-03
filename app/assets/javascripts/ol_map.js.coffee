@@ -23,7 +23,7 @@ $ ->
     return
 
   lineLayer = null
-  addLine = (json) ->
+  addLine = (json,color) ->
     console.log(json)
     # json.railsections[0].railways[0].points[0]
     # json.railsections.length
@@ -44,7 +44,7 @@ $ ->
         lineStrings.setCoordinates lineStrArray
         vectorFeature = new (ol.Feature)(lineStrings.transform('EPSG:4326', 'EPSG:3857'))
         vectorSource = new (ol.source.Vector)(features: [ vectorFeature ])
-        lineColor = '#ff0000'
+        lineColor = color # '#ff0000'
         # 経路用の vector layer の作成
         lineLayer = new (ol.layer.Vector)(
           source: vectorSource
@@ -127,6 +127,6 @@ $ ->
       dataType: 'json'
       # data: params
       success: (json) ->
-        addLine(json)
+        addLine(json,item_data.color)
         return
         
