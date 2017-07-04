@@ -1,13 +1,18 @@
 %h1 Listing train_route_stations
-
+今現在取り扱っている路線・駅名一覧<br>
+station欄、next欄をクリックするこでOpenStreetMap上に駅の位置、駅間の線路を表示する<br>
+駅の位置、駅間の線路は国土情報数値データ(N02-15.xml)を利用している<br>
+TODO:<br>
+* 駅間距離を計算する（DB構造を見直す方がいいかもしれない）<br>
+* 駅、線路の位置をＧＵＩで編集できるようにする<br>
 .container
   .row
     .col-md-4
       = render :partial => "list"
     .col-md-8
-      -# = render :partial => "list"
-      #ol_map.ol_map{:style => "height:600px"}
-      %button.btn.btn-default.railway_delete delete
+      -# = render :partial => "list
+      #ol_map.ol_map{:style => "height:700px"}
+      %button.btn.btn-default.ol_station_delete station delete
+      %button.btn.btn-default.ol_railway_delete railway delete
   .row
     = link_to 'New Train route station', new_train_route_station_path
-    

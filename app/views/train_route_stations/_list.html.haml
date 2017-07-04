@@ -16,11 +16,11 @@
             -# %tr.railway{ data: { model_name: train_route_station.class.name.underscore, get_url: train_route_station_get_railway_path(train_route_station) } }
             %tr
               -# %td= train_route_station.train_route.name
-              %td.railway{ data: { model_name: train_route_station.class.name.underscore, get_url: train_route_station_get_railway_path(train_route_station), color: "#20d020" } }= train_route_station.station.name
+              %td.ol_station{ data: { model_name: train_route_station.class.name.underscore, get_url: train_route_station_get_railway_path(train_route_station), id: train_route_station.id, color: "rgba(32,208,32,0.8)" } }= train_route_station.station.name
               - if train_route_station_index != (@train_route_station_array[index].size - 1)
                 - train_route_station_next = @train_route_station_array[index][train_route_station_index+1]
                 - between_train_route_station = @between_train_route_station_array[index][train_route_station_index]
-                %td.railway{ data: { model_name: between_train_route_station.class.name.underscore, get_url: between_train_route_station_get_railway_path(between_train_route_station), color: "#d02020" } }= train_route_station_next.station.name
+                %td.ol_railway{ data: { model_name: between_train_route_station.class.name.underscore, get_url: between_train_route_station_get_railway_path(between_train_route_station), id: between_train_route_station.id, color: "rgba(208,32,32,0.5" } }= train_route_station_next.station.name
               -else
                 %td= "-"
               %td= train_route_station.distance
