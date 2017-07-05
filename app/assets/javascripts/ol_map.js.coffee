@@ -73,33 +73,48 @@ $ ->
         addRailway( json, item_data)
         return
 
+  convertCoordinate = (lat, lng) ->
+    ol.proj.transform [
+      lat
+      lng
+    ], 'EPSG:4326', 'EPSG:3857'
+
+  markerStyleDefault = new (ol.style.Style)(image: new (ol.style.Icon)(
+    anchor: [
+      0.5
+      1
+    ]
+    anchorXUnits: 'fraction'
+    anchorYUnits: 'fraction'
+    opacity: 0.75
+    src: 'assets/icons/marker.png'))
+
   stationLayers = {}
   addStation = (json, item_data) ->
     # json.railsections[0].railways[0].points[0]
     # json.railsections.length
     lineStrArray = new Array
+    lat = 0.0
+    lng = 0.0
+    cnt = 0
     $.each json.railsections, (rsi,railsection) ->
       $.each railsection.railways, (rwi,railway) ->
         pi = 0
         # point$.each railway.points, (pi,point) ->
-        while pi < railway.points.length - 1
-          point0 = railway.points[pi]
-          point1 = railway.points[pi+1]
-          lineStrArray.push [
-            [parseFloat(point0.lat),parseFloat(point0.lng)]
-            [parseFloat(point1.lat),parseFloat(point1.lng)]
-          ]
+        while pi < railway.points.length
+          point = railway.points[pi]
+          lat += parseFloat(point.lat)
+          lng += parseFloat(point.lng)
+          cnt++
           pi++
-    lineStrings = new (ol.geom.MultiLineString)([])
-    lineStrings.setCoordinates lineStrArray
-    vectorFeature = new (ol.Feature)(lineStrings.transform('EPSG:4326', 'EPSG:3857'))
-    vectorSource = new (ol.source.Vector)(features: [ vectorFeature ])
-    # 経路用の vector layer の作成
+    lat = lat/cnt
+    lng = lng/cnt
+    markerFeature = new (ol.Feature)(geometry: new (ol.geom.Point)(convertCoordinate(lat, lng)))
+    markerSource = new (ol.source.Vector)(features: [markerFeature])
+    # 駅用の station layer の作成
     stationLayer = new (ol.layer.Vector)(
-      source: vectorSource
-      style: new (ol.style.Style)(stroke: new (ol.style.Stroke)(
-        color: item_data.color
-        width: 10)))
+      source: markerSource
+      style: markerStyleDefault)
     # vector layer の追加
     map.addLayer stationLayer
     stationLayers[item_data.id] = stationLayer
