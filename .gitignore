@@ -10,6 +10,9 @@
 # http://github.com/RailsApps/rails-composer/issues
 #----------------------------------------------------------------------------
 
+# my data
+tools/rail_data_converter/*.xml
+
 # bundler state
 /.bundle
 /vendor/bundle/

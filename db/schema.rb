@@ -11,7 +11,53 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170614064759) do
+ActiveRecord::Schema.define(version: 20170702114808) do
+
+  create_table "between_train_route_stations", force: :cascade do |t|
+    t.integer  "train_route_station1_id"
+    t.integer  "train_route_station2_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "between_train_route_stations", ["train_route_station1_id"], name: "index_between_train_route_stations_on_train_route_station1_id"
+  add_index "between_train_route_stations", ["train_route_station2_id"], name: "index_between_train_route_stations_on_train_route_station2_id"
+
+  create_table "points", force: :cascade do |t|
+    t.integer  "railway_id"
+    t.decimal  "lat",        precision: 11, scale: 8
+    t.decimal  "lng",        precision: 11, scale: 8
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "points", ["railway_id"], name: "index_points_on_railway_id"
+
+  create_table "railsection_railways", force: :cascade do |t|
+    t.integer  "railsection_id"
+    t.integer  "railway_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "railsection_railways", ["railsection_id"], name: "index_railsection_railways_on_railsection_id"
+  add_index "railsection_railways", ["railway_id"], name: "index_railsection_railways_on_railway_id"
+
+  create_table "railsections", force: :cascade do |t|
+    t.text     "name"
+    t.integer  "railsectionable_id"
+    t.string   "railsectionable_type"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "railsections", ["railsectionable_type", "railsectionable_id"], name: "index_railsections_00"
+
+  create_table "railways", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"

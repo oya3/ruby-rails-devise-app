@@ -1,0 +1,9 @@
+= simple_form_for(@between_train_route_station) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :train_route_station1
+    = f.association :train_route_station2
+
+  .form-actions
+    = f.button :submit

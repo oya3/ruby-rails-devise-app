@@ -1,23 +1,52 @@
+# coding: utf-8
 class TrainRouteStationsController < ApplicationController
   before_action :set_train_route_station, only: [:show, :edit, :update, :destroy]
 
-
+  # ajax api
   def sort
     train_route_station = TrainRouteStation.find(params[:train_route_station_id])
     train_route_station.update(train_route_station_params)
     render nothing: true
   end
-  
+
+  # ajax api
+  # 駅の線路情報を取得
+  def get_railway
+    train_route_station = TrainRouteStation.find(params[:train_route_station_id])
+    # has_many でネスとしている場合は、includeを使う
+    render json: train_route_station.as_json(
+             :include => {
+               :railsections => {
+                 :include=> {
+                   :railways => {
+                     :include=> :points
+                   }
+                 }
+               }
+             }
+           )
+  end
+
   # GET /train_route_stations
   # GET /train_route_stations.json
   def index
     # @train_route_stations = TrainRouteStation.all
     # @train_route_stations = TrainRouteStation.ordered_by_train_route_code.order(:row_order)
-    @train_route_stations = TrainRouteStation.with_train_route.order("train_routes.code", :row_order)
+    # @train_route_stations = TrainRouteStation.with_train_route.order("train_routes.code", :row_order)
+    # どうやってデータを取得するのがいいかは不明。。。チェーンメソッドでやりくりできるはず。。。
     @train_routes = TrainRoute.order(:code)
     @train_route_station_array = Array.new
-    @train_routes.each do |train_route|
+    @between_train_route_station_array = Array.new
+    @train_routes.each.with_index(0) do |train_route, index|
+      # TrainRouteStation.with_train_route.where(..) は配列が戻ってくる
       @train_route_station_array << TrainRouteStation.with_train_route.where("train_routes.code = ?", train_route.code).order(:row_order)
+      
+      @between_train_route_station_array[index] = Array.new
+      (@train_route_station_array[index].size-1).times do |i|
+        between_train_route_station = BetweenTrainRouteStation.find_by( train_route_station1: @train_route_station_array[index][i],
+                                                                        train_route_station2: @train_route_station_array[index][i+1] )
+        @between_train_route_station_array[index] << between_train_route_station
+      end
     end
   end
 
