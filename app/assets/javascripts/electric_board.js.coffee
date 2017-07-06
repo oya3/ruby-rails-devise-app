@@ -37,7 +37,7 @@ update_electric_board = ->
 window.onload = ->
   if $('.electric_board').length == 0
     return
-  $('.electric_board').append $("<canvas class='electric_board_canvas box_curve' style='position: absolute; z-index: 1; left: 0px; top: 0px;'></canvas>")
+  $('.electric_board').append $("<canvas class='electric_board_canvas box_curve'></canvas>")
   electric_board_canvas = $('.electric_board_canvas')[0]
   update_electric_board()
   return

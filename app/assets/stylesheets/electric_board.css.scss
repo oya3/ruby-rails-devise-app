@@ -1,3 +1,4 @@
+/* 電光掲示版 */
 .electric_board {
   background-color: #333333;
   position: relative;
@@ -6,6 +7,14 @@
     font-size: 48px;
     font-family: '游明朝', YuMincho, 'ヒラギノ明朝 ProN W3', 'Hiragino Mincho ProN', 'HG明朝E', 'ＭＳ Ｐ明朝', 'ＭＳ 明朝', serif;
   }
+}
+
+/* 電光掲示版で利用するキャンバス(格子) */
+.electric_board_canvas {
+  position: absolute; /* .electric_boardと同じ位置から描画開始するため */
+  z-index: 1; /* 表示を前面にする */
+  left: 0px; /* .electric_boardと同じ位置から描画開始 */
+  top: 0px;
 }
 
 .box_curve {
