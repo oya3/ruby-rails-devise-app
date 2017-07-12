@@ -155,7 +155,9 @@ class N02Dataset
 
   # stationに紐づいてるカーブを取得
   def get_station_curve(skey)
+    raise "ERROR: get_station_curve() not found skey #{skey}" unless @stations.has_key? skey
     ckey = @stations[skey][:location]
+    raise "ERROR: get_station_curve() not found ckey #{ckey}" unless @curves.has_key? ckey
     curve = Curve.new ckey, @curves[ckey]
     curve
   end
@@ -173,8 +175,11 @@ class N02Dataset
           train_route[:section_keys] << key # 対象のrailroadsection番号を取得
         end
       end
-
+      # 駅の駅ホームカーブを取得する
+      # n02_xxから取得した全国の駅名をもってるので
+      # 第一ループはn02_xxで取得したものを回す
       @stations.each do |key,value|
+        # configファイルで指定された駅にマッチしたかを確認している
         train_route[:stations].each do |station|
           # station[:name] # 駅名
           if value[:railway_line_name] == train_route[:name] &&
@@ -185,6 +190,16 @@ class N02Dataset
           end
         end
       end
+      # ここでconfigファイルに指定された駅が無い場合はエラー表示する
+      not_found_stations = Array.new
+      train_route[:stations].each do |station|
+        not_found_stations << station[:name] unless station.has_key? :keys
+      end
+      if not_found_stations.size >= 1
+        msg = not_found_stations.join("\n")
+        raise "ERROR: not found station\n#{msg}"
+      end
+      
     end
   end
 
@@ -221,15 +236,23 @@ class N02Dataset
     last_index = curve_points.size - 1
     return [curve_points[0], curve_points[last_index]]
   end
+
+  def get_points_from_section_key(section_key)
+    raise "ERROR: 指定したsection_key[#{section_key}]がない" unless @sections.has_key? section_key
+    section = @sections[section_key]
+    raise "ERROR: カーブがない[#{section[:location]}]" unless @curves.has_key? section[:location]
+    return @curves[section[:location]]
+  end
   
   # 指定したpointがfirst,lastにあるsection_nameを得る
   def find_section_name(all_names, point)
     all_names.each do |key,value|
       next if value == :use
-      first_last_point = get_first_last_curve_point(key)
-      2.times do |i|
-        if( first_last_point[i][:lat] == point[:lat] && first_last_point[i][:lng] == point[:lng] )
-          return {name: key, index: i, first_last_point: first_last_point}
+      points = get_points_from_section_key(key) # セクション名から座標位置を取得
+      [ 0, (points.size-1)].each do |i|
+        if points[i][:lat] == point[:lat] && points[i][:lng] == point[:lng]
+          # name: section_key名, index: 発見した位置(0:first,1:last), points: 座標配列, size: 座標数
+          return {name: key, index: i, points: points, size: point.size }
         end
       end
     end
@@ -238,14 +261,28 @@ class N02Dataset
   
   
   # 指定したscetion_name1,section_name2間のsection名を取得する
-  def get_between_sections( section_name1, section_name2, section_name_keys)
+  # between_sections = get_between_sections( station_name1, station_name2, stations_section_key, train_route[:section_keys] )
+  def get_between_sections( station_name1, station_name2, stations_section_key, section_name_keys)
+
+    # 一度使ったsection_name_keyは使わせないためようエリア
     all_names = Hash.new
     section_name_keys.each do |name|
       all_names[name] = :nouse
     end
+    
+    # 対象2駅のsection_key名を取得
+    unless stations_section_key.has_key? station_name1
+      binding.pry
+    end
+    unless stations_section_key.has_key? station_name2
+      binding.pry
+    end
+    section_name1 = stations_section_key[station_name1]
+    section_name2 = stations_section_key[station_name2]
+    
     # 開始、終了のsection名があるか確認
-    raise "get_between_sections エラー 01" unless all_names.has_key? section_name1
-    raise "get_between_sections エラー 02" unless all_names.has_key? section_name2
+    raise "get_between_sections エラー section_name1[#{section_name1}]" unless all_names.has_key? section_name1
+    raise "get_between_sections エラー section_name2[#{section_name2}]" unless all_names.has_key? section_name2
     all_names[section_name1] = :use
     # all_names[section_name2] = :use
 
@@ -260,14 +297,37 @@ class N02Dataset
       _out << section_name1
       _all_names = all_names.clone
       target_point = start_point[i]
+      # 指定したpointがあるsection_nameを得る
       while (find = find_section_name(_all_names, target_point))
         index = find[:index]
-        point = find[:first_last_point][index]
-        _out << find[:name]
+        find_point = find[:points][index] # indexはfirst(0)かlast(1)の見つけた側の番号が入る
         _all_names[find[:name]] = :use
+        
+        # 見つけたsection_keyが対象2駅以外の駅カーブ情報と一致したら無視する（環状なんかのループで逆回りを防止するため用）
+        find_inner_station = false
+        stations_section_key.each do |name,key|
+          next if name == station_name1 # 対象駅１ならチェックしない
+          next if name == station_name2 # 対象駅２ならチェックしない
+          
+          curve = get_points_from_section_key key
+          # pointが同値の場合は別の駅情報となるはず。。。
+          next if curve.size != find[:points].size
+          count = curve.size
+          curve.size.times do |i|
+            if curve[i][:lat] == find[:points][i][:lat] && curve[i][:lng] == find[:points][i][:lng]
+              count -= 1
+            end
+          end
+          if count == 0
+            find_inner_station = true
+          end
+        end
+        next if find_inner_station
+        
+        _out << find[:name] # 対象
         # 探し出したpointがend_pointのfirstかlastにマッチしたか確認
         2.times do |i|
-          if( end_point[i][:lat] == point[:lat] && end_point[i][:lng] == point[:lng] )
+          if( end_point[i][:lat] == find_point[:lat] && end_point[i][:lng] == find_point[:lng] )
             complete = true
             break
           end
@@ -276,20 +336,17 @@ class N02Dataset
           break
         end
         # 次のsection名を探す
-        target_point = index == 0 ? find[:first_last_point][1]: find[:first_last_point][0]
+        target_point = index == 0 ? find[:points][ find[:points].size - 1  ]: find[:points][0]
       end
       if complete
         out = _out
         break
       end
     end
-    if out.nil?
-      binding.pry
-      puts "異常だ error"
-    end
+    raise "ERROR: get_between_sections" if out.nil?
     return out
   end
-  
+
   # train_routes(路線情報) に紐づく駅(stations)の順番通りの駅間の線路情報を作成する
   # 
   # 以下の方法では対応できなかった。2017/07/03
@@ -299,41 +356,37 @@ class N02Dataset
   # 抽出した路線情報名が駅１がeb02_001、駅２がeb02_003 の場合、eb02_001,eb02_002,eb02_003 が駅間の路線情報となる
   def make_between_station_curve
     @train_routes.each do |train_route|
-      between_stations = train_route[:stations].size - 1 # 駅間数
 
-      between_stations.times do |i|
-        mt = Array.new
-        2.times do |j|
-          station = train_route[:stations][i+j] # 
-          curve = get_station_curve station[:keys][0]
-          # この路線(train_route)の全路線カーブ情報から駅(station)の駅ホームカーブと
-          # 同じ値のカーブ情報である路線情報名を取得する
-          section_key = get_section_key(train_route[:section_keys],curve.pos_array)
-          mt[j] = section_key.match(/eb02_(\d+)/)
-        end
-        # 同じ値のカーブ情報が見つからない場合は異常事態とする
-        if mt[0].nil? || mt[1].nil?
-          raise "make_between_station_curve エラー"
-        end
-        # 実験 2017/07/03
-        between_sections = get_between_sections("eb02_#{mt[0][1]}", "eb02_#{mt[1][1]}", train_route[:section_keys] )
-        train_route[:stations][i+0][:section_keys] = between_sections
-        
-        # # eb02_xxx(数値) から間の数値を算出するため駅１、駅２を昇順にする
-        # start_number = mt[0][1].to_i
-        # end_number = mt[1][1].to_i
-        # if start_number > end_number
-        #   start_number = mt[1][1].to_i
-        #   end_number = mt[0][1].to_i
-        # end
-        # # 駅間の番号を作成する
-        # section_keys = Array.new
-        # for num in start_number..end_number do
-        #   section_keys << "eb02_#{num}"
-        # end
-        # # train_routes.stationsに:section_keys追加
-        # train_route[:stations][i+0][:section_keys] = section_keys
+      # 路線駅の全て駅ホームカーブと同値の路線情報名(section_key)を取得
+      stations_section_key = Hash.new
+      train_route[:stations].each.with_index(0) do |station|
+        curve = get_station_curve station[:keys][0] # TODO: [0] は複数駅情報があっても１つめを対象。要考慮が必要
+        stations_section_key[station[:name]] = get_section_key(train_route[:section_keys],curve.pos_array)
       end
+      
+      between_station_count = train_route[:stations].size - 1 # 駅間数
+      between_station_count.times do |i|
+        # # FIXME: 駅間の線路カーブを取得する実験的な試み 2017/07/03
+        station_name1 = train_route[:stations][i][:name]
+        station_name2 = train_route[:stations][i+1][:name]
+        between_sections = get_between_sections( station_name1, station_name2, stations_section_key, train_route[:section_keys] )
+        train_route[:stations][i+0][:section_keys] = between_sections
+      end
+      # # ループ（環状線)か判断
+      # station = train_route[:stations][between_station_count]
+      # if station.has_key? :next
+      #   section_keys = Array.new
+      #   curve = get_station_curve station[:keys][0]
+      #   section_keys[0] = get_section_key(train_route[:section_keys],curve.pos_array)
+        
+      #   loop_station = train_route[:stations][0]
+      #   curve = get_station_curve loop_station[:keys][0]
+      #   section_keys[1] = get_section_key(train_route[:section_keys],curve.pos_array)
+        
+      #   between_sections = get_between_sections( section_keys[0], section_keys[1], train_route[:section_keys] )
+      #   train_route[:stations][between_station_count][:section_keys] = between_sections
+      # end
+      
     end
   end
   

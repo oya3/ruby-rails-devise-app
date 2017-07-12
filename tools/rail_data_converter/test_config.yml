@@ -10,6 +10,9 @@ contents:
   train_routes:
     - name: 東海道線
       company: 西日本旅客鉄道
+      display:
+        name: 琵琶湖線
+        company: JR西日本
       stations:
         - name: 米原
         - name: 彦根
@@ -34,6 +37,9 @@ contents:
     
     - name: 湖西線
       company: 西日本旅客鉄道
+      display:
+        name: 湖西線
+        company: JR西日本
       stations:
         - name: 山科
         - name: 大津京
@@ -59,6 +65,9 @@ contents:
     
     - name: 草津線
       company: 西日本旅客鉄道
+      display:
+        name: 草津線
+        company: JR西日本
       stations:
         - name: 草津
         - name: 手原
@@ -71,4 +80,33 @@ contents:
         - name: 甲賀
         - name: 油日
         - name: 柘植
+
+    - name: 大阪環状線
+      company: 西日本旅客鉄道
+      display:
+        name: 大阪環状線1
+        company: JR西日本
+      stations:
+        - name: 天王寺
+        - name: 寺田町
+        - name: 桃谷
+        - name: 鶴橋
+        - name: 玉造
+        - name: 森ノ宮
+        - name: 大阪城公園
+        - name: 京橋
+        - name: 桜ノ宮
+        - name: 天満
+        - name: 大阪
+        - name: 福島
+        - name: 野田
+        - name: 西九条
+        - name: 弁天町
+        - name: 大正
+        - name: 芦原橋
+        - name: 今宮
+        - name: 新今宮
+          next: 天王寺 # ループ(環状)を表す
+
+
 
