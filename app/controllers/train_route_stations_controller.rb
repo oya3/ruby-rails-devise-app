@@ -47,6 +47,11 @@ class TrainRouteStationsController < ApplicationController
                                                                         train_route_station2: @train_route_station_array[index][i+1] )
         @between_train_route_station_array[index] << between_train_route_station
       end
+      # 環状線(ループ)の場合
+      end_index = @train_route_station_array[index].size-1
+      between_train_route_station = BetweenTrainRouteStation.find_by( train_route_station1: @train_route_station_array[index][end_index],
+                                                                      train_route_station2: @train_route_station_array[index][0] )
+      @between_train_route_station_array[index] << between_train_route_station # find_by で発見できない場合は nil のはず
     end
   end
 

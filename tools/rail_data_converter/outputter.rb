@@ -128,6 +128,32 @@ USERS_END
           out << "between_train_route_station.railsections << railsection"
         end
       end
+      
+      # 環状線（ループ）がある場合
+      end_index = train_route[:stations].size-1
+      station = train_route[:stations][end_index]
+      if station.has_key? :next
+        loop_index = -1
+        train_route[:stations].each.with_index(0) do |trs,i|
+          if trs[:name] == station[:next]
+            loop_index = i
+            break
+          end
+        end
+        raise "ERROR: make_between_train_route_stations() not found station[#{station[:next]}]" if loop_index == -1
+        train_route_station1 = train_route[:stations][end_index]
+        train_route_station2 = train_route[:stations][loop_index]
+        out << "train_route_station1 = TrainRouteStation.find_by(train_route: train_route, station: Station.find_by(name: '#{train_route_station1[:name]}'))"
+        out << "train_route_station2 = TrainRouteStation.find_by(train_route: train_route, station: Station.find_by(name: '#{train_route_station2[:name]}'))"
+        out << "between_train_route_station = BetweenTrainRouteStation.create(train_route_station1: train_route_station1,"
+        out << "                                                              train_route_station2: train_route_station2)"
+        train_route_station1[:section_keys].each do |section_name|
+          curve_name = n02dataset[:sections][section_name][:location]
+          out << "railsection = Railsection.create(name: '#{section_name}')"
+          out << "railsection.railways << Railway.find_by(name: '#{curve_name}')"
+          out << "between_train_route_station.railsections << railsection"
+        end
+      end
     end
   end
 

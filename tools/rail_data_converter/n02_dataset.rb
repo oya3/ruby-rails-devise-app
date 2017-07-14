@@ -271,12 +271,8 @@ class N02Dataset
     end
     
     # 対象2駅のsection_key名を取得
-    unless stations_section_key.has_key? station_name1
-      binding.pry
-    end
-    unless stations_section_key.has_key? station_name2
-      binding.pry
-    end
+    raise "ERROR: get_between_sections() unknown station_name1[#{station_name1}]" unless stations_section_key.has_key? station_name1
+    raise "ERROR: get_between_sections() unknown station_name2[#{station_name2}]" unless stations_section_key.has_key? station_name2
     section_name1 = stations_section_key[station_name1]
     section_name2 = stations_section_key[station_name2]
     
@@ -372,20 +368,14 @@ class N02Dataset
         between_sections = get_between_sections( station_name1, station_name2, stations_section_key, train_route[:section_keys] )
         train_route[:stations][i+0][:section_keys] = between_sections
       end
-      # # ループ（環状線)か判断
-      # station = train_route[:stations][between_station_count]
-      # if station.has_key? :next
-      #   section_keys = Array.new
-      #   curve = get_station_curve station[:keys][0]
-      #   section_keys[0] = get_section_key(train_route[:section_keys],curve.pos_array)
-        
-      #   loop_station = train_route[:stations][0]
-      #   curve = get_station_curve loop_station[:keys][0]
-      #   section_keys[1] = get_section_key(train_route[:section_keys],curve.pos_array)
-        
-      #   between_sections = get_between_sections( section_keys[0], section_keys[1], train_route[:section_keys] )
-      #   train_route[:stations][between_station_count][:section_keys] = between_sections
-      # end
+      # ループ（環状線)か判断
+      station = train_route[:stations][between_station_count]
+      if station.has_key? :next
+        station_name1 = station[:name]
+        station_name2 = station[:next]
+        between_sections = get_between_sections( station_name1, station_name2, stations_section_key, train_route[:section_keys] )
+        train_route[:stations][between_station_count][:section_keys] = between_sections
+      end
       
     end
   end

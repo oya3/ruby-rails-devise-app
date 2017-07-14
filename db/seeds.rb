@@ -3211,6 +3211,18 @@ railway.points.create(lat: '135.500660000', lng: '34.650190000')
 railway = Railway.create( name: 'cv_sta4127')
 railway.points.create(lat: '135.502920000', lng: '34.649620000')
 railway.points.create(lat: '135.500660000', lng: '34.650190000')
+railway = Railway.create( name: 'cv_rss8767')
+railway.points.create(lat: '135.512080000', lng: '34.647440000')
+railway.points.create(lat: '135.509510000', lng: '34.648050000')
+railway.points.create(lat: '135.506770000', lng: '34.648710000')
+railway.points.create(lat: '135.506060000', lng: '34.648880000')
+railway.points.create(lat: '135.504600000', lng: '34.649230000')
+railway.points.create(lat: '135.503160000', lng: '34.649560000')
+railway.points.create(lat: '135.502920000', lng: '34.649620000')
+railway = Railway.create( name: 'cv_rss8768')
+railway.points.create(lat: '135.515220000', lng: '34.646850000')
+railway.points.create(lat: '135.512940000', lng: '34.647420000')
+railway.points.create(lat: '135.512080000', lng: '34.647440000')
 
 # -- train_routes ---
 train_route = TrainRoute.create(code: '1', name: '東海道線')
@@ -4505,4 +4517,20 @@ railsection.railways << Railway.find_by(name: 'cv_rss8771')
 between_train_route_station.railsections << railsection
 railsection = Railsection.create(name: 'eb02_11981')
 railsection.railways << Railway.find_by(name: 'cv_rss9131')
+between_train_route_station.railsections << railsection
+train_route_station1 = TrainRouteStation.find_by(train_route: train_route, station: Station.find_by(name: '新今宮'))
+train_route_station2 = TrainRouteStation.find_by(train_route: train_route, station: Station.find_by(name: '天王寺'))
+between_train_route_station = BetweenTrainRouteStation.create(train_route_station1: train_route_station1,
+                                                              train_route_station2: train_route_station2)
+railsection = Railsection.create(name: 'eb02_11981')
+railsection.railways << Railway.find_by(name: 'cv_rss9131')
+between_train_route_station.railsections << railsection
+railsection = Railsection.create(name: 'eb02_11959')
+railsection.railways << Railway.find_by(name: 'cv_rss8767')
+between_train_route_station.railsections << railsection
+railsection = Railsection.create(name: 'eb02_11960')
+railsection.railways << Railway.find_by(name: 'cv_rss8768')
+between_train_route_station.railsections << railsection
+railsection = Railsection.create(name: 'eb02_11973')
+railsection.railways << Railway.find_by(name: 'cv_rss9132')
 between_train_route_station.railsections << railsection
