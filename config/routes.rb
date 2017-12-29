@@ -8,7 +8,9 @@ Rails.application.routes.draw do
     put :sort # 並び替え ajax api
     get :get_railway # 線路情報を取得する ajax api
   end
-  resources :train_routes
+  resources :train_routes do
+    get :get_route_station # 指定した路線の駅一覧を取得する ajax api
+  end
   resources :stations
   devise_for :users
   as :user do

@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require jquery_nested_form
 //= require jquery-ui
+//= require chosen-jquery
 //= require bootstrap-sprockets
 //= require_tree .

@@ -1,0 +1,4 @@
+%select.train-route-select
+  - @train_routes.each.with_index(0) do |train_route,index|
+    %option{:value => train_route.id}= train_route.name
+    -# %option= train_route.code.to_s + ':' + train_route.name

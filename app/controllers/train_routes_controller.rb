@@ -1,3 +1,4 @@
+# coding: cp932
 class TrainRoutesController < ApplicationController
   before_action :set_train_route, only: [:show, :edit, :update, :destroy]
   respond_to :html
@@ -42,6 +43,56 @@ class TrainRoutesController < ApplicationController
   def destroy
     @train_route.destroy
     respond_with(@train_route, location: train_routes_url)
+  end
+
+  # ajax api
+  # Žw’è‚µ‚½ü˜H‚Ì‰wˆê——‚ðŽæ“¾‚·‚é
+  # [
+  # {
+  #   "id":1,
+  #   "train_route_id":1,
+  #   "station_id":1,
+  #   "row_order":0,
+  #   "distance":null,
+  #   "created_at":"2017-07-12T14:23:44.758+09:00",
+  #  "updated_at":"2017-07-12T14:23:44.758+09:00",
+  #  "station":{
+  #               "id":1,
+  #               "code":1,
+  #               "name":"•ÄŒ´",
+  #             "created_at":"2017-07-12T14:23:13.497+09:00",
+  #             "updated_at":"2017-07-12T14:23:13.497+09:00"
+  #             }
+  # },
+  # {
+  #   "id":2,
+  #   "train_route_id":1,
+  #   "station_id":2,
+  #   "row_order":4194304,
+  #   "distance":null,
+  #   "created_at":"2017-07-12T14:23:44.843+09:00",
+  #  "updated_at":"2017-07-12T14:23:44.843+09:00",
+  #  "station":{
+  #               "id":2,
+  #               "code":2,
+  #               "name":"•Fª",
+  #             "created_at":"2017-07-12T14:23:13.505+09:00",
+  #             "updated_at":"2017-07-12T14:23:13.505+09:00"
+  #             }
+  # },
+  # ...
+  def get_route_station
+    train_route = TrainRoute.find(params[:train_route_id])
+    # TrainRouteStation.with_train_route.where(..) ‚Í”z—ñ‚ª–ß‚Á‚Ä‚­‚é
+    train_route_stations = TrainRouteStation.with_train_route.where("train_routes.code = ?", train_route.code).order(:row_order)
+    # has_many ‚ÅƒlƒX‚Æ‚µ‚Ä‚¢‚éê‡‚ÍAinclude‚ðŽg‚¤
+    render json: train_route_stations.as_json(
+             :include => {
+               :station => {
+                 # :include=> :points
+               }
+             }
+           )
   end
 
   private
