@@ -1,4 +1,4 @@
-# coding: cp932
+# coding: utf-8
 class TrainRoutesController < ApplicationController
   before_action :set_train_route, only: [:show, :edit, :update, :destroy]
   respond_to :html
@@ -46,7 +46,7 @@ class TrainRoutesController < ApplicationController
   end
 
   # ajax api
-  # Žw’è‚µ‚½ü˜H‚Ì‰wˆê——‚ðŽæ“¾‚·‚é
+  # æŒ‡å®šã—ãŸç·šè·¯ã®é§…ä¸€è¦§ã‚’å–å¾—ã™ã‚‹
   # [
   # {
   #   "id":1,
@@ -59,7 +59,7 @@ class TrainRoutesController < ApplicationController
   #  "station":{
   #               "id":1,
   #               "code":1,
-  #               "name":"•ÄŒ´",
+  #               "name":"ç±³åŽŸ",
   #             "created_at":"2017-07-12T14:23:13.497+09:00",
   #             "updated_at":"2017-07-12T14:23:13.497+09:00"
   #             }
@@ -75,7 +75,7 @@ class TrainRoutesController < ApplicationController
   #  "station":{
   #               "id":2,
   #               "code":2,
-  #               "name":"•Fª",
+  #               "name":"å½¦æ ¹",
   #             "created_at":"2017-07-12T14:23:13.505+09:00",
   #             "updated_at":"2017-07-12T14:23:13.505+09:00"
   #             }
@@ -83,9 +83,9 @@ class TrainRoutesController < ApplicationController
   # ...
   def get_route_station
     train_route = TrainRoute.find(params[:train_route_id])
-    # TrainRouteStation.with_train_route.where(..) ‚Í”z—ñ‚ª–ß‚Á‚Ä‚­‚é
+    # TrainRouteStation.with_train_route.where(..) ã¯é…åˆ—ãŒæˆ»ã£ã¦ãã‚‹
     train_route_stations = TrainRouteStation.with_train_route.where("train_routes.code = ?", train_route.code).order(:row_order)
-    # has_many ‚ÅƒlƒX‚Æ‚µ‚Ä‚¢‚éê‡‚ÍAinclude‚ðŽg‚¤
+    # has_many ã§ãƒã‚¹ã¨ã—ã¦ã„ã‚‹å ´åˆã¯ã€includeã‚’ä½¿ã†
     render json: train_route_stations.as_json(
              :include => {
                :station => {
