@@ -55,12 +55,14 @@ $ ->
     map.setIndex(railwayLayer, -1)
     return
 
-  $('.ol_railway_delete').click ->
+  # $('.ol_railway_delete').click ->
+  $(document).on 'click', '.ol_railway_delete', ->
     $.each railwayLayers, (id,railwayLayer) ->
       map.removeLayer railwayLayer
     railwayLayers = {}
 
-  $('.ol_railway').click ->
+  # $('.ol_railway').click ->
+  $(document).on 'click', '.ol_railway', ->
     item_data = $(this).data()
     if item_data.id of railwayLayers
       return
@@ -120,12 +122,20 @@ $ ->
     stationLayers[item_data.id] = stationLayer
     return
 
-  $('.ol_station_delete').click ->
+  # $('.ol_station_delete').click ->
+  $(document).on 'click', '.ol_station_delete', ->
     $.each stationLayers, (id,stationLayer) ->
       map.removeLayer stationLayer
     stationLayers = {}
 
-  $('.ol_station').click ->
+# $('p').on 'click', ->
+#   hogehoge
+#   return
+# $(document).on 'click', 'p', ->
+#   hogehoge
+#   return
+  # $('.ol_station').click ->
+  $(document).on 'click', '.ol_station', ->
     item_data = $(this).data()
     if item_data.id of stationLayers
       return
@@ -136,5 +146,4 @@ $ ->
       success: (json) ->
         addStation( json, item_data)
         return
-
-        
+    return

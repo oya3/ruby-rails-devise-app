@@ -8,8 +8,8 @@
             -# %th Train route
             %th Station
             %th Next
-            %th Distance
-            %th Row order
+            -# %th Distance
+            -# %th Row order
 
         %tbody
           - @train_route_station_array[index].each.with_index(0) do |train_route_station,train_route_station_index|
@@ -23,6 +23,6 @@
                 %td.ol_railway{ data: { model_name: between_train_route_station.class.name.underscore, get_url: between_train_route_station_get_railway_path(between_train_route_station), id: between_train_route_station.id, color: "rgba(208,32,32,0.5" } }= train_route_station_next.station.name
               -else
                 %td= "-"
-              %td= train_route_station.distance
-              %td= train_route_station.row_order
+              -# %td= train_route_station.distance
+              -# %td= train_route_station.row_order
 
