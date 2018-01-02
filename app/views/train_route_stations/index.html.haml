@@ -15,9 +15,13 @@ TODO:<br>
       #ol_map.ol_map
       %button.btn.btn-default.ol_station_delete station delete
       %button.btn.btn-default.ol_railway_delete railway delete
-      %div{:style => "position: absolute; top: 0px; left: 0px; z-index: 1; width: 30%;"}
+      %div{:style => "position: absolute; top: 0px; left: 0px; z-index: 1;"}
         = render :partial => "list_for_chosen"
-        = render :partial => "list_for_accordion"
-        = render :partial => "list"
+        -# = render :partial => "list"
+        = render :partial => "table_test"
+        -# = render :partial => "list_for_accordion"
+        -# = render :partial => "list"
+        -# <td class="ol_station" data-color="rgba(32,208,32,0.8)" data-get-url="/train_route_stations/1/get_railway" data-id="1" data-model-name="train_route_station">米原</td>
+        -# <td class="ol_railway" data-color="rgba(208,32,32,0.5" data-get-url="/between_train_route_stations/1/get_railway" data-id="1" data-model-name="between_train_route_station">彦根</td>
   .row
     = link_to 'New Train route station', new_train_route_station_path

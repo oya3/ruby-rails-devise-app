@@ -1,32 +1,10 @@
 -# %div{:style => "height:200px; width:200px; opacity: 0.75; overflow-y: scroll;" }
-%div{:style => "height:75%; width:100%; opacity: 0.75; overflow-y: scroll;" }
-  %table.table.table-striped.table-bordered
-    %thead
-      %tr
-        %th Station
-        %th Next
-    %tbody
-      %tr
-        %td test01
-        %td test02
-      %tr
-        %td test11
-        %td test12
-      %tr
-        %td test21
-        %td test22
-      %tr
-        %td test31
-        %td test32
-      %tr
-        %td test41
-        %td test42
-      %tr
-        %td test51
-        %td test52
-      %tr
-        %td test61
-        %td test62
-      %tr
-        %td test71
-        %td test72
+-# %div{:style => "height:30%; opacity: 0.75; overflow-y: scroll;" }
+%div{:style => "width:200px; max-height:200px; overflow-y: scroll;" }
+  -# %table.table.table-striped.table-bordered#train_route_stations
+  -# %table.table#train_route_stations{:style => "background-color: #ddd; border: 1px solid #000; " }
+  %table.table.table-bordered#train_route_stations{:style => "background-color: #888;"}
+    -# %thead
+      -# %tr
+      -#   %th Station
+      -#   %th Next
