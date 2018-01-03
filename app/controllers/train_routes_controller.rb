@@ -106,19 +106,20 @@ class TrainRoutesController < ApplicationController
     # TrainRouteStation.with_train_route.where(..) は配列が戻ってくる
     train_route_stations = TrainRouteStation.with_train_route.where("train_routes.code = ?", train_route.code).order(:row_order)
     between_train_route_station_array = Array.new
-    train_route_stations.size.times do |i|
+    end_index = train_route_stations.size - 1
+    end_index.times do |i|
       between_train_route_station = BetweenTrainRouteStation.find_by( train_route_station1: train_route_stations[i],
                                                                       train_route_station2: train_route_stations[i+1] )
       between_train_route_station_array << between_train_route_station
     end
     # 環状線(ループ)の場合
-    end_index = train_route_stations.size - 1
     between_train_route_station = BetweenTrainRouteStation.find_by( train_route_station1: train_route_stations[end_index],
                                                                     train_route_station2: train_route_stations[0] )
     between_train_route_station_array << between_train_route_station # find_by で発見できない場合は nil のはず
     total = Hash.new
     total[:train_route_stations] = train_route_stations.as_json( :include => :station )
     total[:between_train_route_stations] = between_train_route_station_array.as_json
+    # xxx = aaa
     # has_many でネスとしている場合は、includeを使う
     render json: total.to_json
 

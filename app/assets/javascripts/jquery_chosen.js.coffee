@@ -1,11 +1,13 @@
 $ ->
   # 駅名、次駅リスト更新
-  $('.train-route-select').chosen
-    #disable_search_threshold: 2
-    allow_single_deselect: true
-    # enable_split_word_search: false
-    # no_results_text: 'No results matched'
-    # width: '200px'
+  # $('.train-route-select').chosen
+  #   #disable_search_threshold: 2
+  #   allow_single_deselect: true
+  #   # enable_split_word_search: false
+  #   # no_results_text: 'No results matched'
+  #   # width: '200px'
+  # for dummy
+  $('.container').on 'click', ->
 
   $('.train-route-select').on 'change', (evt, params) ->
     # 以下のＵＲＬでtrain_route_stationsがもらえるはず
@@ -13,8 +15,9 @@ $ ->
     # /train_routes/1/get_route_station
     # value = $('.train-route-select').val();
     # text  = $('.train-route-select option:selected').text()
-    ajax_update_train_route(params["selected"])
-    console.log 'select1112 change'
+    ajax_update_train_route($(this).val())
+    # for chosen
+    # ajax_update_train_route(params["selected"])
     return
 
   ajax_update_train_route = (train_route_id) ->
@@ -34,40 +37,59 @@ $ ->
     i = 0
     trs = json["train_route_stations"]
     btrs = json["between_train_route_stations"]
-    len = trs.length
+    len = trs.length - 1
     while i < len
-      ts = trs[i] #["station"]["name"]
-      if i == len - 1
-        # 最終行
-        $('#train_route_stations').append getRowData(trs[i],null)
-        td0 = $('#train_route_stations tr:last td')[0]
-        $(td0).attr('class','ol_station')
-        $(td0).attr('data-get-url','/train_route_stations/' + trs[i]["id"] + '/get_railway')
-        $(td0).attr('data-id', trs[i]["id"])
-        $(td0).attr('data-model-name', 'train_route_station')
-        # tr = $('#train_route_stations.tr:last')
-      else
-        # その他
-        $('#train_route_stations').append getRowData(trs[i],trs[i+1])
-        td0 = $('#train_route_stations tr:last td')[0]
-        $(td0).attr('class','ol_station')
-        $(td0).attr('data-get-url','/train_route_stations/' + trs[i]["id"] + '/get_railway')
-        $(td0).attr('data-id', trs[i]["id"])
-        $(td0).attr('data-model-name', 'train_route_station')
+      # ts = trs[i] #["station"]["name"]
+      # if i == len - 1
+      #   # 最終行
+      #   $('#train_route_stations').append getRowData(trs[i],null)
+      #   td0 = $('#train_route_stations tr:last td')[0]
+      #   $(td0).attr('class','ol_station')
+      #   $(td0).attr('data-get-url','/train_route_stations/' + trs[i]["id"] + '/get_railway')
+      #   $(td0).attr('data-id', trs[i]["id"])
+      #   $(td0).attr('data-model-name', 'train_route_station')
+      #   # tr = $('#train_route_stations.tr:last')
+      # else
+      # その他
+      $('#train_route_stations').append getRowData(trs[i],trs[i+1])
+      td0 = $('#train_route_stations tr:last td')[0]
+      $(td0).attr('class','ol_station')
+      $(td0).attr('data-get-url','/train_route_stations/' + trs[i]["id"] + '/get_railway')
+      $(td0).attr('data-id', trs[i]["id"])
+      $(td0).attr('data-model-name', 'train_route_station')
 
-        # class="ol_railway"
-        # data-get-url="/between_train_route_stations/1/get_railway"
-        # data-id="1"
-        # data-model-name="between_train_route_station"
-        # data-color="rgba(208,32,32,0.5)"
-        td1 = $('#train_route_stations tr:last td')[1]
-        $(td1).attr('class','ol_railway')
-        $(td1).attr('data-get-url','/between_train_route_stations/' + btrs[i]["id"] + '/get_railway')
-        $(td1).attr('data-id', btrs[i]["id"])
-        $(td1).attr('data-model-name', 'between_train_route_station')
-        $(td1).attr('data-color', 'rgba(208,32,32,0.5)')
-        # tr = $('#train_route_stations.tr:last')
+      # class="ol_railway"
+      # data-get-url="/between_train_route_stations/1/get_railway"
+      # data-id="1"
+      # data-model-name="between_train_route_station"
+      # data-color="rgba(208,32,32,0.5)"
+      td1 = $('#train_route_stations tr:last td')[1]
+      $(td1).attr('class','ol_railway')
+      $(td1).attr('data-get-url','/between_train_route_stations/' + btrs[i]["id"] + '/get_railway')
+      $(td1).attr('data-id', btrs[i]["id"])
+      $(td1).attr('data-model-name', 'between_train_route_station')
+      $(td1).attr('data-color', 'rgba(208,32,32,0.5)')
+      # tr = $('#train_route_stations.tr:last')
       ++i
+
+    if null == btrs[i]
+      $('#train_route_stations').append getRowData(trs[i],null)
+    else
+      $('#train_route_stations').append getRowData(trs[i],trs[0])
+    td0 = $('#train_route_stations tr:last td')[0]
+    $(td0).attr('class','ol_station')
+    $(td0).attr('data-get-url','/train_route_stations/' + trs[i]["id"] + '/get_railway')
+    $(td0).attr('data-id', trs[i]["id"])
+    $(td0).attr('data-model-name', 'train_route_station')
+
+    if null != btrs[i]
+      td1 = $('#train_route_stations tr:last td')[1]
+      $(td1).attr('class','ol_railway')
+      $(td1).attr('data-get-url','/between_train_route_stations/' + btrs[i]["id"] + '/get_railway')
+      $(td1).attr('data-id', btrs[i]["id"])
+      $(td1).attr('data-model-name', 'between_train_route_station')
+      $(td1).attr('data-color', 'rgba(208,32,32,0.5)')
+
     return
 
   getRowData = (ts,ns)->
