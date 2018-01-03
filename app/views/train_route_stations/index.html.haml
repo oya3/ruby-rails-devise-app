@@ -5,21 +5,23 @@ station欄、next欄をクリックするこでOpenStreetMap上に駅の位置�
 TODO:<br>
 * 駅間距離を計算する（DB構造を見直す方がいいかもしれない）<br>
 * 駅、線路の位置をＧＵＩで編集できるようにする<br>
-.container
-  .row.electric_board.box_curve
-    %span{:style=>"color: #ff8500;"}
-      %marquee.message{scrollamount: '10'} 駅名をクリックするとジムマークが表示されます。次の駅をクリックすると線路が表示されます。
+-# .container
+%div
+  .row
+    .electric_board.box_curve
+      %span{:style=>"color: #ff8500;"}
+        %marquee.message{scrollamount: '10'} 駅名をクリックするとジムマークが表示されます。次の駅をクリックすると線路が表示されます。
   .row
     %div{:style => "position: relative;"}
       -# #ol_map.ol_map{:style => "height:700px;"}
       #ol_map.ol_map
       %button.btn.btn-default.ol_station_delete station delete
       %button.btn.btn-default.ol_railway_delete railway delete
-      %div{:style => "position: absolute; top: 0px; left: 0px; z-index: 1;"}
+      %div{:style => "position: absolute; top: 0px; left: 0px; z-index: 1; width: 200px; opacity: 0.85;"}
         = render :partial => "list_for_chosen"
+        = render :partial => "list_for_accordion"
         -# = render :partial => "list"
-        = render :partial => "table_test"
-        -# = render :partial => "list_for_accordion"
+        -# = render :partial => "table_test"
         -# = render :partial => "list"
         -# <td class="ol_station" data-color="rgba(32,208,32,0.8)" data-get-url="/train_route_stations/1/get_railway" data-id="1" data-model-name="train_route_station">米原</td>
         -# <td class="ol_railway" data-color="rgba(208,32,32,0.5" data-get-url="/between_train_route_stations/1/get_railway" data-id="1" data-model-name="between_train_route_station">彦根</td>

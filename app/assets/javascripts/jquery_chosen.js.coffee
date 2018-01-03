@@ -30,7 +30,7 @@ $ ->
   update_train_route = (json) ->
     # json.railsections[0].railways[0].points[0]
     # json.railsections.length
-    $('#train_route_stations').find('tr:gt(0)').remove() # リスト全削除
+    $('#train_route_stations').find('tr').remove() # リスト全削除
     i = 0
     trs = json["train_route_stations"]
     btrs = json["between_train_route_stations"]
