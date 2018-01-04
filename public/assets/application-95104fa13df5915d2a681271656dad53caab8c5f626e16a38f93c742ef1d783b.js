@@ -128933,7 +128933,7 @@ Qk.prototype.un=Qk.prototype.K;
 
 (function() {
   $(function() {
-    var addRailway, addStation, convertCoordinate, map, markerStyleDefault, railwayLayers, stationLayers;
+    var addRailway, addStation, convertCoordinate, map, markerStyleDefault, moveTo, railwayLayers, stationLayers;
     map = new ol.Map({
       layers: [
         new ol.layer.Tile({
@@ -128998,7 +128998,6 @@ Qk.prototype.un=Qk.prototype.K;
       });
       map.addLayer(railwayLayer);
       railwayLayers[item_data.id] = railwayLayer;
-      map.setIndex(railwayLayer, -1);
     };
     $(document).on('click', '.ol_railway_delete', function() {
       $.each(railwayLayers, function(id, railwayLayer) {
@@ -129024,6 +129023,34 @@ Qk.prototype.un=Qk.prototype.K;
     convertCoordinate = function(lat, lng) {
       return ol.proj.transform([lat, lng], 'EPSG:4326', 'EPSG:3857');
     };
+    moveTo = function(location) {
+      var callback, called, duration, parts, view, zoom;
+      view = map.getView();
+      duration = 2000;
+      zoom = view.getZoom();
+      parts = 2;
+      called = false;
+      callback = function(complete) {
+        --parts;
+        if (called) {
+          return;
+        }
+        if (parts === 0 || !complete) {
+          called = true;
+        }
+      };
+      view.animate({
+        center: location,
+        duration: duration
+      }, callback);
+      view.animate({
+        zoom: zoom - 1,
+        duration: duration / 2
+      }, {
+        zoom: zoom,
+        duration: duration / 2
+      }, callback);
+    };
     markerStyleDefault = new ol.style.Style({
       image: new ol.style.Icon({
         anchor: [0.5, 1],
@@ -129035,7 +129062,7 @@ Qk.prototype.un=Qk.prototype.K;
     });
     stationLayers = {};
     addStation = function(json, item_data) {
-      var cnt, lat, lineStrArray, lng, markerFeature, markerSource, stationLayer;
+      var cnt, dist, lat, lineStrArray, lng, markerFeature, markerSource, stationLayer;
       lineStrArray = new Array;
       lat = 0.0;
       lng = 0.0;
@@ -129069,6 +129096,8 @@ Qk.prototype.un=Qk.prototype.K;
       });
       map.addLayer(stationLayer);
       stationLayers[item_data.id] = stationLayer;
+      dist = ol.proj.fromLonLat([lat, lng]);
+      moveTo(dist);
     };
     $(document).on('click', '.ol_station_delete', function() {
       $.each(stationLayers, function(id, stationLayer) {

@@ -52,7 +52,7 @@ $ ->
     # vector layer の追加
     map.addLayer railwayLayer
     railwayLayers[item_data.id] = railwayLayer
-    map.setIndex(railwayLayer, -1)
+    # map.setIndex(railwayLayer, -1)
     return
 
   # $('.ol_railway_delete').click ->
@@ -80,6 +80,35 @@ $ ->
       lat
       lng
     ], 'EPSG:4326', 'EPSG:3857'
+
+  moveTo = (location) ->
+    view = map.getView()
+    duration = 2000
+    zoom = view.getZoom()
+    parts = 2
+    called = false
+
+    callback = (complete) ->
+      --parts
+      if called
+        return
+      if parts == 0 or !complete
+        called = true
+        # done complete
+      return
+
+    view.animate {
+      center: location
+      duration: duration
+    }, callback
+    view.animate {
+      zoom: zoom - 1
+      duration: duration / 2
+    }, {
+      zoom: zoom
+      duration: duration / 2
+    }, callback
+    return
 
   markerStyleDefault = new (ol.style.Style)(image: new (ol.style.Icon)(
     anchor: [
@@ -120,6 +149,24 @@ $ ->
     # vector layer の追加
     map.addLayer stationLayer
     stationLayers[item_data.id] = stationLayer
+    # map 移動
+    # view = map.getView()
+    # view.setCenter(ol.proj.transform([lng, lat], 'EPSG:4326', 'EPSG:3857'))
+
+    # 瞬時移動
+    # map.getView().setCenter convertCoordinate(lat, lng)
+
+    # アニメーション移動
+    dist = ol.proj.fromLonLat([lat, lng]);
+    moveTo(dist)
+
+    # map.getView().setCenter ol.proj.transform([
+    #   lat
+    #   lng
+    # ], 'EPSG:4326', 'EPSG:3857')
+    # map.getView().setZoom 5
+    # view.setCenter(convertCoordinate(lng, lat))
+    # view.setZoom(5)
     return
 
   # $('.ol_station_delete').click ->
