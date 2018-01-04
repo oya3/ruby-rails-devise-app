@@ -1,9 +1,8 @@
 $ ->
   $('.accordion').accordion
     active: false,
-    collapsible: true
-    # heightStyle: "content",
-    # autoHeight: false,
+    collapsible: true,
+    heightStyle: "content",
+    autoHeight: true,
     # clearStyle: true
   return
-  
