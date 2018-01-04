@@ -5,8 +5,8 @@ $ ->
     controls: ol.control.defaults(attributionOptions: collapsible: false)
     view: new (ol.View)(
       # center: ol.proj.transform([136.0785, 35.2269], 'EPSG:4326', 'EPSG:3857')
-      center: ol.proj.transform([136.0785, 35.2269], 'EPSG:4326', 'EPSG:3857')
-      zoom: 9
+      center: ol.proj.transform([135.962374, 35.0226325], 'EPSG:4326', 'EPSG:3857')
+      zoom: 15
     )
   )
 
