@@ -6,7 +6,7 @@ $ ->
   #   # enable_split_word_search: false
   #   # no_results_text: 'No results matched'
   #   # width: '200px'
-  # for dummy
+  #
   $('.container').on 'click', ->
 
   $('.train-route-select').on 'change', (evt, params) ->
@@ -109,6 +109,10 @@ $ ->
     else
       return '<tr><td>' + ts["station"]["name"] + '</td><td>' + "-" + '</td></tr>'
     return
+
+  # 初期選択されてる内容をajaxで取得
+  s0 = $(".train-route-select option:selected").val()
+  ajax_update_train_route(s0)
 
 
     # data-get-url="/train_route_stations/1/get_railway"
