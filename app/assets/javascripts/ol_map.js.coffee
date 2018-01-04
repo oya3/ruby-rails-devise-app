@@ -140,15 +140,17 @@ $ ->
           pi++
     lat = lat/cnt
     lng = lng/cnt
-    markerFeature = new (ol.Feature)(geometry: new (ol.geom.Point)(convertCoordinate(lat, lng)))
-    markerSource = new (ol.source.Vector)(features: [markerFeature])
-    # 駅用の station layer の作成
-    stationLayer = new (ol.layer.Vector)(
-      source: markerSource
-      style: markerStyleDefault)
-    # vector layer の追加
-    map.addLayer stationLayer
-    stationLayers[item_data.id] = stationLayer
+    # 既に登録されてる場合は駅登録しない
+    if !(item_data.id of stationLayers)
+      markerFeature = new (ol.Feature)(geometry: new (ol.geom.Point)(convertCoordinate(lat, lng)))
+      markerSource = new (ol.source.Vector)(features: [markerFeature])
+      # 駅用の station layer の作成
+      stationLayer = new (ol.layer.Vector)(
+        source: markerSource
+        style: markerStyleDefault)
+      # vector layer の追加
+      map.addLayer stationLayer
+      stationLayers[item_data.id] = stationLayer
     # map 移動
     # view = map.getView()
     # view.setCenter(ol.proj.transform([lng, lat], 'EPSG:4326', 'EPSG:3857'))
@@ -184,8 +186,6 @@ $ ->
   # $('.ol_station').click ->
   $(document).on 'click', '.ol_station', ->
     item_data = $(this).data()
-    if item_data.id of stationLayers
-      return
     $.ajax
       type: 'GET'
       url: item_data.getUrl

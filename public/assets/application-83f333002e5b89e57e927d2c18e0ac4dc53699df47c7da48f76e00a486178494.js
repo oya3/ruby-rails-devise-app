@@ -129084,18 +129084,20 @@ Qk.prototype.un=Qk.prototype.K;
       });
       lat = lat / cnt;
       lng = lng / cnt;
-      markerFeature = new ol.Feature({
-        geometry: new ol.geom.Point(convertCoordinate(lat, lng))
-      });
-      markerSource = new ol.source.Vector({
-        features: [markerFeature]
-      });
-      stationLayer = new ol.layer.Vector({
-        source: markerSource,
-        style: markerStyleDefault
-      });
-      map.addLayer(stationLayer);
-      stationLayers[item_data.id] = stationLayer;
+      if (!(item_data.id in stationLayers)) {
+        markerFeature = new ol.Feature({
+          geometry: new ol.geom.Point(convertCoordinate(lat, lng))
+        });
+        markerSource = new ol.source.Vector({
+          features: [markerFeature]
+        });
+        stationLayer = new ol.layer.Vector({
+          source: markerSource,
+          style: markerStyleDefault
+        });
+        map.addLayer(stationLayer);
+        stationLayers[item_data.id] = stationLayer;
+      }
       dist = ol.proj.fromLonLat([lat, lng]);
       moveTo(dist);
     };
@@ -129108,9 +129110,6 @@ Qk.prototype.un=Qk.prototype.K;
     return $(document).on('click', '.ol_station', function() {
       var item_data;
       item_data = $(this).data();
-      if (item_data.id in stationLayers) {
-        return;
-      }
       $.ajax({
         type: 'GET',
         url: item_data.getUrl,
