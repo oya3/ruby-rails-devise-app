@@ -35276,7 +35276,7 @@ return $.ui.tooltip;
     };
     getRowData = function(ts, ns) {
       if (ns) {
-        return '<tr><td>' + ts["station"]["name"] + '</td><td>' + ns["station"]["name"] + '</td></tr>';
+        return '<tr><td>' + ts["station"]["name"] + '</td><td> → ' + ns["station"]["name"] + '</td></tr>';
       } else {
         return '<tr><td>' + ts["station"]["name"] + '</td><td>' + "-" + '</td></tr>';
       }

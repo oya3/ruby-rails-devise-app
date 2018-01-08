@@ -105,7 +105,7 @@ $ ->
     # attr = "class=ol_station data-get-url='/train_route_stations/" + ts["station"]["code"] + "/get_railway' data-id='" + ts["station"]["code"] + "' data-model-name='train_route_station'"
     # attr = 'class=ol_station data-get-url=\'/train_route_stations/' + ts['id'] + '/get_railway\' data-id=\'' + ts['id'] + '\' data-model-name=\'train_route_station\''
     if ns
-      return '<tr><td>' + ts["station"]["name"] + '</td><td>' + ns["station"]["name"] + '</td></tr>'
+      return '<tr><td>' + ts["station"]["name"] + '</td><td> → ' + ns["station"]["name"] + '</td></tr>'
     else
       return '<tr><td>' + ts["station"]["name"] + '</td><td>' + "-" + '</td></tr>'
     return
