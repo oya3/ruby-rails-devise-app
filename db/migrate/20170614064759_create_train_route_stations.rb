@@ -1,4 +1,4 @@
-class CreateTrainRouteStations < ActiveRecord::Migration
+class CreateTrainRouteStations < ActiveRecord::Migration[7.0]
   def change
     create_table :train_route_stations do |t|
       t.references :train_route, index: true, foreign_key: true

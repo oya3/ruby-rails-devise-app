@@ -1,4 +1,4 @@
-class CreateRailsections < ActiveRecord::Migration
+class CreateRailsections < ActiveRecord::Migration[7.0]
   def change
     create_table :railsections do |t|
       t.text :name

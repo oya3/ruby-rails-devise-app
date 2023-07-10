@@ -1,4 +1,4 @@
-class CreateTrainRoutes < ActiveRecord::Migration
+class CreateTrainRoutes < ActiveRecord::Migration[7.0]
   def change
     create_table :train_routes do |t|
       t.integer :code
