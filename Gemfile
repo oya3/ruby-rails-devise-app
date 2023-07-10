@@ -1,16 +1,16 @@
-source 'https://rubygems.org'
-ruby '2.3.1'
-gem 'rails', '4.2.8'
+source 'http://rubygems.org'
+ruby '2.7.8'
+gem 'rails'
 gem 'sqlite3', group: :development
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'sass-rails'
+gem 'uglifier'
+gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'chosen-rails'
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 gem 'devise'
-gem 'bcrypt', git: 'https://github.com/oya3/bcrypt-ruby.git', :require => 'bcrypt'
+gem 'bcrypt'
 gem 'cancancan'
 gem 'rolify'
 gem 'nested_form'
@@ -20,7 +20,7 @@ group :development, :test do
 end
 group :development do
   gem 'puma'
-  gem 'web-console', '~> 2.0'
+  gem 'web-console'
 end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'bootstrap-sass'
@@ -48,7 +48,7 @@ group :test do
   gem 'selenium-webdriver'
 end
 group :development do
-  gem 'erb2haml', '~> 0.1.5'
+  gem 'erb2haml'
   gem 'yaml_db'
 end
 group :production do

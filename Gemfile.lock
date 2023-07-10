@@ -1,51 +1,49 @@
-GIT
-  remote: https://github.com/oya3/bcrypt-ruby.git
-  revision: 23b0517e20e7ddf2e733c1bcdb22b0b12166f042
-  specs:
-    bcrypt (3.1.11)
-
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
-    actionmailer (4.2.8)
-      actionpack (= 4.2.8)
-      actionview (= 4.2.8)
-      activejob (= 4.2.8)
+    actioncable (5.0.7.2)
+      actionpack (= 5.0.7.2)
+      nio4r (>= 1.2, < 3.0)
+      websocket-driver (~> 0.6.1)
+    actionmailer (5.0.7.2)
+      actionpack (= 5.0.7.2)
+      actionview (= 5.0.7.2)
+      activejob (= 5.0.7.2)
       mail (~> 2.5, >= 2.5.4)
-      rails-dom-testing (~> 1.0, >= 1.0.5)
-    actionpack (4.2.8)
-      actionview (= 4.2.8)
-      activesupport (= 4.2.8)
-      rack (~> 1.6)
-      rack-test (~> 0.6.2)
-      rails-dom-testing (~> 1.0, >= 1.0.5)
+      rails-dom-testing (~> 2.0)
+    actionpack (5.0.7.2)
+      actionview (= 5.0.7.2)
+      activesupport (= 5.0.7.2)
+      rack (~> 2.0)
+      rack-test (~> 0.6.3)
+      rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    actionview (4.2.8)
-      activesupport (= 4.2.8)
+    actionview (5.0.7.2)
+      activesupport (= 5.0.7.2)
       builder (~> 3.1)
       erubis (~> 2.7.0)
-      rails-dom-testing (~> 1.0, >= 1.0.5)
+      rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
-    activejob (4.2.8)
-      activesupport (= 4.2.8)
-      globalid (>= 0.3.0)
-    activemodel (4.2.8)
-      activesupport (= 4.2.8)
-      builder (~> 3.1)
-    activerecord (4.2.8)
-      activemodel (= 4.2.8)
-      activesupport (= 4.2.8)
-      arel (~> 6.0)
-    activesupport (4.2.8)
-      i18n (~> 0.7)
+    activejob (5.0.7.2)
+      activesupport (= 5.0.7.2)
+      globalid (>= 0.3.6)
+    activemodel (5.0.7.2)
+      activesupport (= 5.0.7.2)
+    activerecord (5.0.7.2)
+      activemodel (= 5.0.7.2)
+      activesupport (= 5.0.7.2)
+      arel (~> 7.0)
+    activesupport (5.0.7.2)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 0.7, < 2)
       minitest (~> 5.1)
-      thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
-    arel (6.0.4)
+    arel (7.1.4)
     autoprefixer-rails (7.2.4)
       execjs
+    bcrypt (3.1.19)
     better_errors (2.4.0)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
@@ -55,7 +53,7 @@ GEM
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
-    builder (3.2.3)
+    builder (3.2.4)
     byebug (9.1.0)
     cancancan (2.1.2)
     capybara (2.16.1)
@@ -79,9 +77,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.0.5)
-    crass (1.0.3)
+    concurrent-ruby (1.2.2)
+    crass (1.0.6)
     database_cleaner (1.6.2)
+    date (3.3.3)
     debug_inspector (0.0.3)
     devise (4.4.0)
       bcrypt (~> 3.0)
@@ -103,8 +102,8 @@ GEM
     faker (1.8.7)
       i18n (>= 0.7)
     ffi (1.9.18)
-    globalid (0.4.1)
-      activesupport (>= 4.2.0)
+    globalid (1.1.0)
+      activesupport (>= 5.0)
     haml (5.0.4)
       temple (>= 0.8.0)
       tilt
@@ -120,7 +119,7 @@ GEM
       haml (>= 4.0, < 6)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
-    i18n (0.9.1)
+    i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     i18n_generators (2.1.1)
       rails (>= 3.0.0)
@@ -135,44 +134,60 @@ GEM
       railties (>= 3.2.16)
     launchy (2.4.3)
       addressable (~> 2.3)
-    loofah (2.1.1)
+    loofah (2.21.3)
       crass (~> 1.0.2)
-      nokogiri (>= 1.5.9)
-    mail (2.7.0)
+      nokogiri (>= 1.12.0)
+    mail (2.8.1)
       mini_mime (>= 0.1.1)
-    mini_mime (1.0.0)
-    mini_portile2 (2.3.0)
-    minitest (5.11.0)
+      net-imap
+      net-pop
+      net-smtp
+    method_source (1.0.0)
+    mini_mime (1.1.2)
+    mini_portile2 (2.8.2)
+    minitest (5.18.1)
     multi_json (1.12.2)
     nested_form (0.3.2)
-    nokogiri (1.8.1)
-      mini_portile2 (~> 2.3.0)
+    net-imap (0.3.6)
+      date
+      net-protocol
+    net-pop (0.1.2)
+      net-protocol
+    net-protocol (0.2.1)
+      timeout
+    net-smtp (0.3.3)
+      net-protocol
+    nio4r (2.5.9)
+    nokogiri (1.15.3)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (0.21.0)
     public_suffix (3.0.1)
     puma (3.11.0)
-    rack (1.6.8)
+    racc (1.7.1)
+    rack (2.2.7)
     rack-test (0.6.3)
       rack (>= 1.0)
-    rails (4.2.8)
-      actionmailer (= 4.2.8)
-      actionpack (= 4.2.8)
-      actionview (= 4.2.8)
-      activejob (= 4.2.8)
-      activemodel (= 4.2.8)
-      activerecord (= 4.2.8)
-      activesupport (= 4.2.8)
-      bundler (>= 1.3.0, < 2.0)
-      railties (= 4.2.8)
-      sprockets-rails
-    rails-deprecated_sanitizer (1.0.3)
-      activesupport (>= 4.2.0.alpha)
-    rails-dom-testing (1.0.9)
-      activesupport (>= 4.2.0, < 5.0)
-      nokogiri (~> 1.6)
-      rails-deprecated_sanitizer (>= 1.0.1)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails (5.0.7.2)
+      actioncable (= 5.0.7.2)
+      actionmailer (= 5.0.7.2)
+      actionpack (= 5.0.7.2)
+      actionview (= 5.0.7.2)
+      activejob (= 5.0.7.2)
+      activemodel (= 5.0.7.2)
+      activerecord (= 5.0.7.2)
+      activesupport (= 5.0.7.2)
+      bundler (>= 1.3.0)
+      railties (= 5.0.7.2)
+      sprockets-rails (>= 2.0.0)
+    rails-dom-testing (2.1.1)
+      activesupport (>= 5.0.0)
+      minitest
+      nokogiri (>= 1.6)
+    rails-html-sanitizer (1.6.0)
+      loofah (~> 2.21)
+      nokogiri (~> 1.14)
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
@@ -181,12 +196,13 @@ GEM
     rails_layout (1.0.41)
     rails_serve_static_assets (0.0.5)
     rails_stdout_logging (0.0.5)
-    railties (4.2.8)
-      actionpack (= 4.2.8)
-      activesupport (= 4.2.8)
+    railties (5.0.7.2)
+      actionpack (= 5.0.7.2)
+      activesupport (= 5.0.7.2)
+      method_source
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (12.3.0)
+    rake (13.0.6)
     ranked-model (0.4.0)
       activerecord (>= 3.1.12)
     rb-fsevent (0.10.2)
@@ -238,19 +254,20 @@ GEM
       activesupport (>= 4.2)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
-    sprockets (3.7.1)
+    sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
-    sprockets-rails (3.2.1)
+    sprockets-rails (3.2.2)
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.3.13)
     temple (0.8.0)
-    thor (0.20.0)
+    thor (1.2.2)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    tzinfo (1.2.4)
+    timeout (0.4.0)
+    tzinfo (1.2.11)
       thread_safe (~> 0.1)
     uglifier (4.1.2)
       execjs (>= 0.3.0, < 3)
@@ -261,6 +278,9 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    websocket-driver (0.6.5)
+      websocket-extensions (>= 0.1.0)
+    websocket-extensions (0.1.5)
     xpath (2.1.0)
       nokogiri (~> 1.3)
     yaml_db (0.6.0)
@@ -271,31 +291,31 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt!
+  bcrypt
   better_errors
   bootstrap-sass
   byebug
   cancancan
   capybara
   chosen-rails
-  coffee-rails (~> 4.1.0)
+  coffee-rails
   database_cleaner
   devise
-  erb2haml (~> 0.1.5)
+  erb2haml
   factory_girl_rails
   faker
   haml-rails
   high_voltage
   html2haml
   i18n_generators
-  jbuilder (~> 2.0)
+  jbuilder
   jquery-rails
   jquery-ui-rails
   launchy
   nested_form
   pg
   puma
-  rails (= 4.2.8)
+  rails
   rails_12factor
   rails_apps_pages
   rails_apps_testing
@@ -303,18 +323,18 @@ DEPENDENCIES
   ranked-model
   rolify
   rspec-rails
-  sass-rails (~> 5.0)
+  sass-rails
   selenium-webdriver
   simple_form
   spring-commands-rspec
   sqlite3
   tzinfo-data
-  uglifier (>= 1.3.0)
-  web-console (~> 2.0)
+  uglifier
+  web-console
   yaml_db
 
 RUBY VERSION
-   ruby 2.3.1p112
+   ruby 2.7.8p225
 
 BUNDLED WITH
    1.16.0
