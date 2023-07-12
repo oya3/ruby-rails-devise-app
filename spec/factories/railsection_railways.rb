@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :railsection_railway do
     railsection nil
     railway nil

@@ -123,11 +123,11 @@ GEM
     erubi (1.12.0)
     erubis (2.7.0)
     execjs (2.8.1)
-    factory_girl (4.9.0)
-      activesupport (>= 3.0.0)
-    factory_girl_rails (4.9.0)
-      factory_girl (~> 4.9.0)
-      railties (>= 3.0.0)
+    factory_bot (6.2.1)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
@@ -262,7 +262,7 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.12.1)
-    ruby_parser (3.20.2)
+    ruby_parser (3.20.3)
       sexp_processor (~> 4.16)
     rubyzip (2.3.2)
     sass-rails (6.0.0)
@@ -335,7 +335,7 @@ DEPENDENCIES
   database_cleaner
   devise
   erb2haml
-  factory_girl_rails
+  factory_bot_rails
   faker
   haml-rails
   high_voltage

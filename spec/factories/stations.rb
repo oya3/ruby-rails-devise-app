@@ -1,6 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :station do
-    code 1
-    name "MyString"
   end
 end

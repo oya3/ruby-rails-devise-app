@@ -1,5 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :railway do
-    name "MyString"
   end
 end

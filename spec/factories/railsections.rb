@@ -1,6 +1,5 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :railsection do
-    name "MyText"
     railsectionable nil
   end
 end
