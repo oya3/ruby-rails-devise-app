@@ -6,6 +6,8 @@ $ bundle exec rake db:migrate:reset
 $ bundle exec rake db:seed
 $ bundle exec rails server -u puma
 # http://localhost:3000/ をブラウザでアクセス
+#  users:
+#   - id: admin, password: admin3
 
 # * bundle install すると以下のメッセージが表示されるが、現状何も対策していない
 Post-install message from devise:
