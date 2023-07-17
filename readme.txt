@@ -1,5 +1,8 @@
-# 以下の手順でgit clone 後、アプリを起動させることが可能
+# プロジェクト取得
+$ git clone git@github.com:oya3/ruby-rails-devise-app
+$ cd ruby-rails-devise-app
 
+# プロジェクト設定
 $ bundle config set --local path vendor/bundle
 $ bundle install
 $ bundle exec rake db:migrate:reset
