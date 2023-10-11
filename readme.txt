@@ -1,6 +1,22 @@
 # メモ
 - development, production ともにsqlite3を使うように指定している
 - add_mariadb_for_production ブランチにmariadb使用版もある（productionのみ）
+- apache virtualhost 設定追加
+  ```
+  $ sudo emacs /etc/apache2/sites-available/trainroute.conf
+  <VirtualHost *:80>
+      ServerName trainroute.oya3.net
+      DocumentRoot /home/developer/trainroute/public
+      RailsEnv production
+      <Directory "/home/developer/trainroute">
+          Options Includes ExecCGI FollowSymLinks
+          AllowOverride All
+          Order allow,deny
+          Allow from all
+          Require all granted
+      </Directory>
+  </VirtualHost>
+  ```
 - credentials 追加
   ```
   $ EDITOR="vi" bundle exec rails credentials:edit
