@@ -17,6 +17,8 @@
           Require all granted
       </Directory>
   </VirtualHost>
+  $ sudo apache2ctl configtest
+  $ sudo systemctl restart apache2
   ```
 - credentials 追加
   ```
@@ -43,13 +45,17 @@ $ git clone git@github.com:oya3/ruby-rails-devise-app
 $ cd ruby-rails-devise-app
 
 # 前回のbundle設定を破棄する場合
-$ rm -rf .bundle vendor/bundle/
+$ rm -rf .bundle vendor/bundle/ config/master.key
 
 # プロジェクト設定
 $ bundle config set --local path vendor/bundle
 $ bundle install
+$ EDITOR="vi" bundle exec rails credentials:edit
 $ bundle exec rake db:migrate:reset
 $ bundle exec rake db:seed
+
+$ sudo systemctl restart apache2
+
 $ bundle exec rails server -u puma
 # http://localhost:3000/ をブラウザでアクセス
 #  users:
@@ -63,15 +69,33 @@ $ git clone git@github.com:oya3/ruby-rails-devise-app
 $ cd ruby-rails-devise-app
 
 # 前回のbundle設定を破棄する場合
-$ rm -rf .bundle vendor/bundle/
+$ rm -rf .bundle vendor/bundle/ config/master.key
+
+# - mariadb を使用する場合
+$ mysql -u root -p
+MariaDB [(none)]> CREATE DATABASE trainroute default CHARACTER SET utf8mb4;
+MariaDB [(none)]> CREATE USER 'trainroute'@'localhost' IDENTIFIED BY 'abc123!!';
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON trainroute.* TO 'trainroute'@'localhost';
+MariaDB [(none)]> flush privileges;
+MariaDB [(none)]> exit;
+
+# - mariadb の旧設定を削除する場合
+$ mysql -u root -p
+MariaDB [(none)]> drop database trainroute;
+MariaDB [(none)]> CREATE DATABASE trainroute default CHARACTER SET utf8mb4;
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON trainroute.* TO 'trainroute'@'localhost';
+MariaDB [(none)]> flush privileges;
+MariaDB [(none)]> exit;
 
 # プロジェクト設定
-$ bundle config set --local path vendor/bundle
+$ bundle config set --local without 'development test'
 $ bundle install
-$ bundle exec rake db:migrate:reset
-$ bundle exec rake db:seed
-$ bundle exec rails server -u puma
-# http://localhost:3000/ をブラウザでアクセス
+$ EDITOR="vi" bundle exec rails credentials:edit
+
+$ bundle exec rake db:migrate RAILS_ENV=production
+$ bundle exec rake db:seed RAILS_ENV=production
+$ bundle exec rake tmp:cache:clear RAILS_ENV=production
+
 #  users:
 #   - id: admin, password: admin3
 ```
