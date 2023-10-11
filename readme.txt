@@ -1,6 +1,12 @@
+# メモ
+#  - development, production ともにsqlite3を使うように指定している
+
 # プロジェクト取得
 $ git clone git@github.com:oya3/ruby-rails-devise-app
 $ cd ruby-rails-devise-app
+
+# 前回のbundle設定を破棄する場合
+$ rm -rf .bundle vendor/bundle/
 
 # プロジェクト設定
 $ bundle config set --local path vendor/bundle
