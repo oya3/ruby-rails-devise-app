@@ -54,8 +54,6 @@ $ EDITOR="vi" bundle exec rails credentials:edit
 $ bundle exec rake db:migrate:reset
 $ bundle exec rake db:seed
 
-$ sudo systemctl restart apache2
-
 $ bundle exec rails server -u puma
 # http://localhost:3000/ をブラウザでアクセス
 #  users:
@@ -95,6 +93,8 @@ $ EDITOR="vi" bundle exec rails credentials:edit
 $ bundle exec rake db:migrate RAILS_ENV=production
 $ bundle exec rake db:seed RAILS_ENV=production
 $ bundle exec rake tmp:cache:clear RAILS_ENV=production
+
+$ sudo systemctl restart apache2
 
 #  users:
 #   - id: admin, password: admin3
