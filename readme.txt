@@ -1,6 +1,7 @@
 # メモ
 - development, production ともにsqlite3を使うように指定している
 - add_mariadb_for_production ブランチにmariadb使用版もある（productionのみ）
+- apache経由の場合、nodejsが必要なので、$ sudo apt install nodejs の実施が必要
 - apache virtualhost 設定追加
   ```
   $ sudo emacs /etc/apache2/sites-available/trainroute.conf
