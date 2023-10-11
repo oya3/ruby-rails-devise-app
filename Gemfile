@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '3.2.2'
 gem 'rails'
-gem 'sqlite3' # , group: :development
+gem 'sqlite3', group: :development
 gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
@@ -53,5 +53,5 @@ group :development do
 end
 group :production do
   gem 'rails_12factor'
-  # gem 'pg'
+  gem 'mysql2'
 end

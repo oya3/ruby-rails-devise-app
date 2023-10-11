@@ -20,12 +20,21 @@ test:
   <<: *default
   database: db/test.sqlite3
 
-production:
- <<: *default
- database: db/production.sqlite3
+# production:
+#  <<: *default
+#  database: db/production.sqlite3
+#
 # production:
 #   <<: *default
 #   adapter: postgresql
 #   encoding: unicode
 #   pool: 5
-  
+
+production:
+  adapter: mysql2
+  database: trainroute
+  host: localhost
+  username: trainroute
+  password: "abc123!!"
+  # Use "utf8" instead of "utfmb4" for MySQL prior to 5.7.7
+  encoding: utf8mb4
