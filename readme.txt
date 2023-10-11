@@ -1,7 +1,28 @@
 # メモ
-#  - development, production ともにsqlite3を使うように指定している
+- development, production ともにsqlite3を使うように指定している
+- add_mariadb_for_production ブランチにmariadb使用版もある（productionのみ）
+- apache経由の場合、nodejsが必要なので、$ sudo apt install nodejs の実施が必要
+- credentials 追加
+  ```
+  $ EDITOR="vi" bundle exec rails credentials:edit
+  ```
+- storage追加(rails 5.x から追加された storage 設定)
+  ```
+  $ emacs config/storage.yml
+  local:
+    service: Disk
+    root: <%= Rails.root.join("storage") %>
+  ---END---
+  $ emacs config/environments/production.rb
+  config.active_storage.service = :local
+  ---END---
+  $ bundle exec rails active_storage:install RAILS_ENV=production
+  $ bundle exec rake db:migrate RAILS_ENV=production
+  ```
 
-# プロジェクト取得
+# 開発環境構築
+
+```
 $ git clone git@github.com:oya3/ruby-rails-devise-app
 $ cd ruby-rails-devise-app
 
@@ -11,34 +32,61 @@ $ rm -rf .bundle vendor/bundle/
 # プロジェクト設定
 $ bundle config set --local path vendor/bundle
 $ bundle install
+$ EDITOR="vi" bundle exec rails credentials:edit
 $ bundle exec rake db:migrate:reset
 $ bundle exec rake db:seed
 $ bundle exec rails server -u puma
 # http://localhost:3000/ をブラウザでアクセス
 #  users:
 #   - id: admin, password: admin3
+```
 
-# * bundle install すると以下のメッセージが表示されるが、現状何も対策していない
-Post-install message from devise:
+# デプロイ
 
-[DEVISE] Please review the [changelog] and [upgrade guide] for more info on Hotwire / Turbo integration.
+```
+$ git clone git@github.com:oya3/ruby-rails-devise-app
+$ cd ruby-rails-devise-app
 
-  [changelog] https://github.com/heartcombo/devise/blob/main/CHANGELOG.md
-  [upgrade guide] https://github.com/heartcombo/devise/wiki/How-To:-Upgrade-to-Devise-4.9.0-%5BHotwire-Turbo-integration%5D
-  Post-install message from rubyzip:
-RubyZip 3.0 is coming!
-**********************
+# 前回のbundle設定を破棄する場合
+$ rm -rf .bundle vendor/bundle/
 
-The public API of some Rubyzip classes has been modernized to use named
-parameters for optional arguments. Please check your usage of the
-following classes:
-  * `Zip::File`
-  * `Zip::Entry`
-  * `Zip::InputStream`
-  * `Zip::OutputStream`
+# プロジェクト設定
+$ bundle config set --local path vendor/bundle
+$ bundle install
+$ EDITOR="vi" bundle exec rails credentials:edit
+$ bundle exec rake db:migrate:reset
+$ bundle exec rake db:seed
+$ bundle exec rails server -u puma
+# http://localhost:3000/ をブラウザでアクセス
+#  users:
+#   - id: admin, password: admin3
+```
 
-Please ensure that your Gemfiles and .gemspecs are suitably restrictive
-to avoid an unexpected breakage when 3.0 is released (e.g. ~> 2.3.0).
-See https://github.com/rubyzip/rubyzip for details. The Changelog also
-lists other enhancements and bugfixes that have been implemented since
-version 2.3.0.
+# 課題
+- bundle install すると以下のメッセージが表示されるが、現状何も対策していない
+  ```
+  Post-install message from devise:
+
+  [DEVISE] Please review the [changelog] and [upgrade guide] for more info on Hotwire / Turbo integration.
+
+    [changelog] https://github.com/heartcombo/devise/blob/main/CHANGELOG.md
+    [upgrade guide] https://github.com/heartcombo/devise/wiki/How-To:-Upgrade-to-Devise-4.9.0-%5BHotwire-Turbo-integration%5D
+    Post-install message from rubyzip:
+  RubyZip 3.0 is coming!
+  **********************
+
+  The public API of some Rubyzip classes has been modernized to use named
+  parameters for optional arguments. Please check your usage of the
+  following classes:
+    * `Zip::File`
+    * `Zip::Entry`
+    * `Zip::InputStream`
+    * `Zip::OutputStream`
+
+  Please ensure that your Gemfiles and .gemspecs are suitably restrictive
+  to avoid an unexpected breakage when 3.0 is released (e.g. ~> 2.3.0).
+  See https://github.com/rubyzip/rubyzip for details. The Changelog also
+  lists other enhancements and bugfixes that have been implemented since
+  version 2.3.0.
+  ```
+
